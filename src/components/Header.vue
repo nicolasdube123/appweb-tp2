@@ -3,10 +3,12 @@
 </script>
 
 <template>
-    <div class="d-inline">
-        <p class="h2">Titre du jeu</p>
-        <p class="h3 text-secondary">Accueil</p>
-        <p class="h3 text-secondary">Score</p>
+    <div class="container">
+        <div class="row">
+            <p class="col h2">Titre du jeu</p>
+            <p class="col h3 text-secondary">Accueil</p>
+            <p class="col h3 text-secondary">Score</p>
+        </div>
     </div>
 </template>
 

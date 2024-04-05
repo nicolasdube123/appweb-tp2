@@ -7,11 +7,6 @@ export interface Ranking {
     name: String;
     score: number;
 }
-export const DEFAULT_RANKING: Ranking = {
-    id: "0",
-    name: "Error",
-    score: 0
-}
 
 export class ShipService {
   API_URL: String

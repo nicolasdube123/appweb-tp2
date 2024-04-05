@@ -9,13 +9,6 @@ export interface Character {
     experience: String;
     ship: String;
 }
-export const DEFAULT_SONG: Character = {
-    id: "20",
-    name: "Millennium Falcon",
-    credit: "Millennium Falcon",
-    experience: "Millennium Falcon",
-    ship: "Millennium Falcon"
-}
 
 export class ShipService {
   API_URL: String

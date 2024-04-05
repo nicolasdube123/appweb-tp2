@@ -6,9 +6,10 @@ export interface Ships {
     id: String;
     name: String;
 }
-export const DEFAULT_SONG: Ships = {
-    id: "20",
-    name: "Millennium Falcon"
+export interface ShipsWithLife {
+  id: String;
+  name: String;
+  vitality: number;
 }
 
 export class ShipService {
