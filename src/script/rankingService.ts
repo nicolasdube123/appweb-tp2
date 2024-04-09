@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const SHIPS_PATH = '/songs'
+const RANKING_PATH = '/ranking'
 
 export interface Ranking {
     id: String;
@@ -8,7 +8,7 @@ export interface Ranking {
     score: number;
 }
 
-export class ShipService {
+export class RankingService {
   API_URL: String
 
   constructor () {
@@ -16,12 +16,12 @@ export class ShipService {
   }
 
   async getRankings(): Promise<Array<Ranking>> {
-    const { data } = await axios.get(this.API_URL + SHIPS_PATH)
+    const { data } = await axios.get(this.API_URL + RANKING_PATH)
     return data
   }
 
   async getRanking (songId: String):Promise<Ranking> {
-    const { data } = await axios.get(this.API_URL + SHIPS_PATH + '/' + songId)
+    const { data } = await axios.get(this.API_URL + RANKING_PATH + '/' + songId)
     return data
   }
 }

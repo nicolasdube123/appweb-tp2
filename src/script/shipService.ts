@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const SHIPS_PATH = '/songs'
+const SHIPS_PATH = '/ships'
 
 export interface Ships {
     id: String;
