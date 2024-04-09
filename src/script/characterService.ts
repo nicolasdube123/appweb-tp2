@@ -1,16 +1,17 @@
 import axios from 'axios'
+import { ShipsWithLife } from './shipService';
 
-const SHIPS_PATH = '/songs'
+const CHARACTERS_PATH = '/characters'
 
 export interface Character {
     id: String;
     name: String;
     credit: String;
     experience: String;
-    ship: String;
+    ship: ShipsWithLife;
 }
 
-export class ShipService {
+export class CharacterService {
   API_URL: String
 
   constructor () {
@@ -18,12 +19,12 @@ export class ShipService {
   }
 
   async getCharacters(): Promise<Array<Character>> {
-    const { data } = await axios.get(this.API_URL + SHIPS_PATH)
+    const { data } = await axios.get(this.API_URL + CHARACTERS_PATH)
     return data
   }
 
   async getCharacter (songId: String):Promise<Character> {
-    const { data } = await axios.get(this.API_URL + SHIPS_PATH + '/' + songId)
+    const { data } = await axios.get(this.API_URL + CHARACTERS_PATH + '/' + songId)
     return data
   }
 }
