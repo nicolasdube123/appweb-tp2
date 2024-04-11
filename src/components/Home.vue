@@ -25,6 +25,7 @@
         <button type="submit" class="btn btn-primary btn-block w-100 mb-3">Démarrer la partie</button>
         </form>
     </div>
+
 </template>
 
 <style scoped>
