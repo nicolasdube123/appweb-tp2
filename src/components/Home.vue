@@ -1,8 +1,8 @@
 <script setup lang="ts">
-    //import { Ships, ShipService } from "../script/shipService"
+    import { Ships, ShipService } from "../script/shipService"
 
-    //const service: ShipService = new ShipService();
-    //let ships: Array<Ships> = await service.getShips();
+    const service: ShipService = new ShipService();
+    let ships: Array<Ships> = await service.getShips();
 </script>
 
 <template>
@@ -19,9 +19,7 @@
         <div class="form-group my-3">
             <label for="shipSelect">Votre vaisseau:</label>
             <select class="form-select" id="shipSelect">
-                <!--<option v-for="ship in ships" value={{ship.id}}>{{ship.name}}</option>-->
-                <option value="ship2">Vaisseau 2</option>
-                <option value="ship3">Vaisseau 3</option>
+                <option v-for="ship in ships" value={{ship.id}}>{{ship.name}}</option>
             </select>
         </div>
         <button type="submit" class="btn btn-primary btn-block w-100 mb-3">Démarrer la partie</button>
