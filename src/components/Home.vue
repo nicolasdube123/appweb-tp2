@@ -12,17 +12,17 @@
     </p>
     <div id="shipForm" class="container w-25 border rounded">
         <form>
-        <div class="form-group my-3">
-            <label for="name">Votre nom:</label>
-            <input type="text" class="form-control" id="name">
-        </div>
-        <div class="form-group my-3">
-            <label for="shipSelect">Votre vaisseau:</label>
-            <select class="form-select" id="shipSelect">
-                <option v-for="ship in ships" value={{ship.id}}>{{ship.name}}</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block w-100 mb-3">Démarrer la partie</button>
+            <div class="form-group my-3">
+                <label for="name">Votre nom:</label>
+                <input type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group my-3">
+                <label for="shipSelect">Votre vaisseau:</label>
+                <select class="form-select" id="shipSelect">
+                    <option v-for="ship in ships" value={{ship.id}}>{{ship.name}}</option>
+                </select>
+            </div>
+            <RouterLink to="/game" class="btn btn-primary btn-block w-100 mb-3">Démarrer la partie</RouterLink>
         </form>
     </div>
 
