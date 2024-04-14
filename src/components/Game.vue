@@ -1,5 +1,8 @@
 <script setup lang="ts">
-
+    const props = defineProps({
+        name: String,
+        shipName: String
+    })
 </script>
 
 <template>
@@ -35,11 +38,11 @@
         <div class="d-flex justify-content-end row my-2">
             <div class="w-50">
                 <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>Nom du joueur</p>
+                    <p>{{name}}</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-2">
                     <p>Maitre - 0 CG</p>
-                    <p class="ship-font text-center">X-wing</p>
+                    <p class="ship-font text-center">{{shipName}}</p>
                     <p class="text-center">progress bar</p>
                 </div>
             </div>
