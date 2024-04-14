@@ -1,8 +1,3 @@
 {
-    "/ranking": "/ranking",
-    "/ranking/:id": "/ranking/id",
-    "/ships": "/ships?_embed=characters",
-    "/ships/:id": "/ships?_embed=characters/id",
-    "/characters": "/characters?_expand=ships",
-    "/characters/:id": "/characters?_expand=ships/id"
+
 }
