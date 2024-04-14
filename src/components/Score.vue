@@ -1,12 +1,13 @@
 <script setup lang="ts">
     import { Ranking, RankingService } from "../script/rankingService"
+    //import { ref, onMounted } from 'vue';
 
     const service: RankingService = new RankingService();
+    const ranking: Array<Ranking> = await service.getRankings();
 
-    let ranking: Array<Ranking> = await service.getRankings();
     //Pour comparer par le score
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-    ranking.sort((a, b) => { 
+    ranking.sort((a: any, b: any) => { 
         const scoreA = a.score
         const scoreB = b.score
         if (scoreA < scoreB) {

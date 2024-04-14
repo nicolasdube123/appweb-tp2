@@ -1,8 +1,12 @@
 <script setup lang="ts">
-    //import { Ships, ShipService } from "../script/shipService"
+    import { Ships, ShipService } from "../script/shipService"
+    import { ref } from "vue"
 
-    //const service: ShipService = new ShipService();
-    //let ships: Array<Ships> = await service.getShips();
+    const service: ShipService = new ShipService();
+    const ships: Array<Ships> = await service.getShips();
+
+    const name = ref<String>('');
+    const shipName = ref<String>('');
 </script>
 
 <template>
@@ -12,19 +16,17 @@
     </p>
     <div id="shipForm" class="container w-25 border rounded">
         <form>
-        <div class="form-group my-3">
-            <label for="name">Votre nom:</label>
-            <input type="text" class="form-control" id="name">
-        </div>
-        <div class="form-group my-3">
-            <label for="shipSelect">Votre vaisseau:</label>
-            <select class="form-select" id="shipSelect">
-                <!--<option v-for="ship in ships" value={{ship.id}}>{{ship.name}}</option>-->
-                <option value="ship2">Vaisseau 2</option>
-                <option value="ship3">Vaisseau 3</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block w-100 mb-3">Démarrer la partie</button>
+            <div class="form-group my-3">
+                <label for="name">Votre nom:</label>
+                <input type="text" class="form-control" id="name" v-model="name">
+            </div>
+            <div class="form-group my-3">
+                <label for="shipSelect">Votre vaisseau:</label>
+                <select class="form-select" id="shipSelect" v-model="shipName">
+                    <option v-for="ship in ships" :value="ship.name">{{ship.name}}</option>
+                </select>
+            </div>
+            <RouterLink @click="$emit('submitForm', name, shipName)" to="/game" class="btn btn-primary btn-block w-100 mb-3">Démarrer la partie</RouterLink>
         </form>
     </div>
 
