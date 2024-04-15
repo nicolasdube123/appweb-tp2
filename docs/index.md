@@ -25,3 +25,18 @@ return -1
 return 0
 })
 ```
+
+<br/>
+<br/>
+
+### *Auteur: Raphaël Boudreault***
+
+* Utilisation très bien bootsrap 
+
+* La variable props n'est pas utilisé. Peut causer de futur conflit avec les variables
+
+* Implémentation non désiré de retourner sur une partie quitté
+
+```vue
+<RouterLink to="/game" class="text-decoration-none h2 me-3">Titre du jeu</RouterLink>
+```
