@@ -23,8 +23,8 @@ export class CharacterService {
     return data
   }
 
-  async getCharacter (songId: String):Promise<Character> {
-    const { data } = await axios.get(this.API_URL + CHARACTERS_PATH + '/' + songId)
+  async getCharacter (characterId: String):Promise<Character> {
+    const { data } = await axios.get(this.API_URL + CHARACTERS_PATH + '/' + characterId)
     return data
   }
 }

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const SHIPS_PATH = '/ships'
 
-export interface Ships {
+export interface Ship {
     id: String;
     name: String;
 }
@@ -19,13 +19,13 @@ export class ShipService {
     this.API_URL = 'http://localhost:3000'
   }
 
-  async getShips(): Promise<Array<Ships>> {
+  async getShips(): Promise<Array<Ship>> {
     const { data } = await axios.get(this.API_URL + SHIPS_PATH)
     return data
   }
 
-  async getShip (songId: String):Promise<Ships> {
-    const { data } = await axios.get(this.API_URL + SHIPS_PATH + '/' + songId)
+  async getShip (shipId: String):Promise<Ship> {
+    const { data } = await axios.get(this.API_URL + SHIPS_PATH + '/' + shipId)
     return data
   }
 }

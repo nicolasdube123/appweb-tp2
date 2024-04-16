@@ -20,8 +20,8 @@ export class RankingService {
     return data
   }
 
-  async getRanking (songId: String):Promise<Player> {
-    const { data } = await axios.get(this.API_URL + RANKING_PATH + '/' + songId)
+  async getRanking (playerId: String):Promise<Player> {
+    const { data } = await axios.get(this.API_URL + RANKING_PATH + '/' + playerId)
     return data
   }
 }
