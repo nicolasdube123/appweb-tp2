@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import { ref } from "vue";
     import { Game } from "../App.vue"
 
     const props = defineProps({
@@ -7,6 +8,16 @@
             required: true
         }
     });
+
+    const experiences: { [key: number]: string } = {
+        1: "Débutant",
+        2: "Confirmé",
+        3: "Expert",
+        4: "Maître"
+    };
+
+    const initialPlayerHealth = ref(props.game.player.ship.vitality)
+    const initialOpponentHealth = ref(props.game.opponent.ship.vitality)
 
     function fight() {
         console.log("Player: " + props.game.player.ship.vitality + " Opponent EXP: " + props.game.opponent.experience)
@@ -70,13 +81,13 @@
                     <p>Actions</p>
                 </div>
                 <div class="bg-dark rounded-bottom row">
-                    <button @click="fight" class="col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
+                    <button @click="fight" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
                         <p>Combattre</p>
                     </button>
-                    <button @click="end" class="col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
+                    <button @click="end" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
                         <p>Terminer la mission</p>
                     </button>
-                    <button @click="endWithRepair" class="col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
+                    <button @click="endWithRepair" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
                         <p>Terminer la mission et réparer le vaisseau</p>
                     </button>
                 </div>
@@ -100,7 +111,7 @@
                 <div class="bg-dark rounded-bottom p-2">
                     <p>Maitre - {{ props.game.player.credit }} CG</p>
                     <p class="ship-font text-center">{{props.game.player.ship.name}}</p>
-                    <p class="text-center">progress bar</p>
+                    <progress :value="props.game.player.ship.vitality" :max="initialPlayerHealth" class="w-100"></progress>
                 </div>
             </div>
             <div class="w-50">
@@ -108,9 +119,9 @@
                     <p>Nom de l'adversaire</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-2">
-                    <p>Expert - 120 CG</p>
+                    <p>{{ experiences[props.game.opponent.experience] }} - {{ props.game.opponent.credit }} CG</p>
                     <p class="ship-font text-center">A-wing</p>
-                    <p class="text-center">progress bar</p>
+                    <progress :value="props.game.opponent.ship.vitality" :max="initialOpponentHealth" class="w-100"></progress>
                 </div>
             </div>
         </div>
