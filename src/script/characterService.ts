@@ -7,13 +7,7 @@ export interface Character {
     id: String;
     name: String;
     credit: String;
-    experience: String;
-    ship: ShipsWithLife;
-}
-
-export interface Player {
-    name: String;
-    credit: number;
+    experience: number;
     ship: ShipsWithLife;
 }
 

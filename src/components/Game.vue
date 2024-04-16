@@ -1,15 +1,19 @@
 <script setup lang="ts">
-    import { Player } from '../script/characterService';
+    import { Game } from "../App.vue"
 
     const props = defineProps({
-        player: {
-            type: Object as () => Player,
+        game: {
+            type: Object as () => Game,
             required: true
         }
     });
 
     function fight() {
-        
+        props.game.player.ship.vitality -= damageLost(4)
+        props.game.opponent.ship.vitality -= damageLost(props.game.opponent.experience)
+
+        console.log("Player: " + props.game.player.ship.vitality)
+        console.log("Opponent: " + props.game.opponent.ship.vitality)
     }
 
     function end() {
@@ -17,8 +21,38 @@
     }
 
     function endWithRepair() {
-        props.player.credit -= (100 - props.player.ship.vitality) * 5
+        props.game.player.credit -= (100 - props.game.player.ship.vitality) * 5
         end()
+    }
+
+    function damageLost(experience : number) : number {
+        let odds: number
+        
+        switch (experience) {
+            case 1:
+                odds = 0.2
+                break;
+            case 2:
+                odds = 0.35
+                break;
+            case 3:
+                odds = 0.5
+                break;
+            case 4:
+                odds = 0.7
+                break;
+            default:
+                console.log(experience)
+                throw new Error("Invalid experience level")
+        }
+
+        // random() retourne un nombre aléatoire entre 0 et 1
+        // Si odds = 0.7, il y a 70% de chance que le nombre aléatoire soit inférieur, etc.
+        if (Math.random() <= odds) {
+            // Nombre aléatoire entre 3 et 6
+            return 3 + Math.random() * 3
+        }
+        return 0
     }
 </script>
 
@@ -55,11 +89,11 @@
         <div class="d-flex justify-content-end row my-2">
             <div class="w-50">
                 <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>{{props.player.name}}</p>
+                    <p>{{props.game.player.name}}</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-2">
                     <p>Maitre - 0 CG</p>
-                    <p class="ship-font text-center">{{props.player.ship.name}}</p>
+                    <p class="ship-font text-center">{{props.game.player.ship.name}}</p>
                     <p class="text-center">progress bar</p>
                 </div>
             </div>

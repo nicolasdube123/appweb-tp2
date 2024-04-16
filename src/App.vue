@@ -1,25 +1,43 @@
 <script setup lang="ts">
     import Header from "./components/Header.vue"
     import { ref } from "vue"
-    import { Player } from "./script/characterService";
-    import { ShipService, Ships } from "./script/shipService";
+    import { ShipService, Ship, ShipsWithLife } from "./script/shipService";
+    import { Character, CharacterService } from "./script/characterService";
 
-    const service: ShipService = new ShipService();
+    interface Player {
+        name: String;
+        credit: number;
+        ship: ShipsWithLife;
+    }
 
-    let player = ref<Player | null>();
+    export interface Game {
+        player: Player;
+        opponent: Character;
+        mission: number
+    }
 
-    async function createPlayer(formName: string, formShipId: string) {
-        const ship : Ships = await service.getShip(formShipId); 
+    const shipService: ShipService = new ShipService();
+    const characterService: CharacterService = new CharacterService();
 
-        player.value = {
-            name: formName,
-            credit: 100,
-            ship:  {
-                id: ship.id,
-                name: ship.name,
-                vitality: 100
-            }
-         }
+    let game = ref<Game | null>();
+
+    async function createGame(formName: string, formShipId: string) {
+        const playerShip : Ship = await shipService.getShip(formShipId)
+        const characters = await characterService.getCharacters()
+
+        game.value = {
+            player: {
+                name: formName,
+                credit: 100,
+                ship:  {
+                    id: playerShip.id,
+                    name: playerShip.name,
+                    vitality: 100
+                }
+            },
+            opponent: characters[Math.floor(Math.random() * characters.length)],
+            mission : 1
+        }
     }
 </script>
 
@@ -30,8 +48,8 @@
             <RouterView v-slot="{ Component }">
                 <component 
                     :is="Component" 
-                    :player=player
-                    v-on:submitForm="createPlayer"
+                    :game=game
+                    v-on:submitForm="createGame"
                 />
             </RouterView>
         </Suspense>
