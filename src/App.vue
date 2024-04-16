@@ -1,15 +1,25 @@
 <script setup lang="ts">
     import Header from "./components/Header.vue"
     import { ref } from "vue"
+    import { Player } from "./script/characterService";
+    import { ShipService, Ships } from "./script/shipService";
 
-    let name = ref('')
-    let shipName = ref('')
+    const service: ShipService = new ShipService();
 
-    function receiveForm(formName: string, formShipName: string) {
-        console.log("Name: " + formName)
-        console.log("Ship: " + formShipName)
-        name.value = formName
-        shipName.value = formShipName
+    let player = ref<Player | null>();
+
+    async function createPlayer(formName: string, formShipId: string) {
+        const ship : Ships = await service.getShip(formShipId); 
+
+        player.value = {
+            name: formName,
+            credit: 100,
+            ship:  {
+                id: ship.id,
+                name: ship.name,
+                vitality: 100
+            }
+         }
     }
 </script>
 
@@ -20,9 +30,8 @@
             <RouterView v-slot="{ Component }">
                 <component 
                     :is="Component" 
-                    :name=name 
-                    :shipName=shipName 
-                    v-on:submitForm="receiveForm"
+                    :player=player
+                    v-on:submitForm="createPlayer"
                 />
             </RouterView>
         </Suspense>

@@ -11,6 +11,12 @@ export interface Character {
     ship: ShipsWithLife;
 }
 
+export interface Player {
+    name: String;
+    credit: number;
+    ship: ShipsWithLife;
+}
+
 export class CharacterService {
   API_URL: String
 

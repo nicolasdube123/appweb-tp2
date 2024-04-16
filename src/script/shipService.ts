@@ -24,8 +24,8 @@ export class ShipService {
     return data
   }
 
-  async getShip (songId: String):Promise<Ships> {
-    const { data } = await axios.get(this.API_URL + SHIPS_PATH + '/' + songId)
+  async getShip (shipId: String):Promise<Ships> {
+    const { data } = await axios.get(this.API_URL + SHIPS_PATH + '/' + shipId)
     return data
   }
 }

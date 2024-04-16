@@ -5,8 +5,8 @@
     const service: ShipService = new ShipService();
     const ships: Array<Ships> = await service.getShips();
 
-    const name = ref<String>('');
-    const shipName = ref<String>('');
+    const name = ref<String>()
+    const shipId = ref<String>()
 </script>
 
 <template>
@@ -22,11 +22,11 @@
             </div>
             <div class="form-group my-3">
                 <label for="shipSelect">Votre vaisseau:</label>
-                <select class="form-select" id="shipSelect" v-model="shipName">
-                    <option v-for="ship in ships" :value="ship.name">{{ship.name}}</option>
+                <select class="form-select" id="shipSelect" v-model="shipId">
+                    <option v-for="ship in ships" :value="ship.id">{{ship.name}}</option>
                 </select>
             </div>
-            <RouterLink @click="$emit('submitForm', name, shipName)" to="/game" class="btn btn-primary btn-block w-100 mb-3">Démarrer la partie</RouterLink>
+            <RouterLink @click="$emit('submitForm', name, shipId)" to="/game" class="btn btn-primary btn-block w-100 mb-3">Démarrer la partie</RouterLink>
         </form>
     </div>
 

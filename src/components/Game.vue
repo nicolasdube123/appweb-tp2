@@ -1,8 +1,25 @@
 <script setup lang="ts">
+    import { Player } from '../script/characterService';
+
     const props = defineProps({
-        name: String,
-        shipName: String
-    })
+        player: {
+            type: Object as () => Player,
+            required: true
+        }
+    });
+
+    function fight() {
+        
+    }
+
+    function end() {
+
+    }
+
+    function endWithRepair() {
+        props.player.credit -= (100 - props.player.ship.vitality) * 5
+        end()
+    }
 </script>
 
 <template>
@@ -13,15 +30,15 @@
                     <p>Actions</p>
                 </div>
                 <div class="bg-dark rounded-bottom row">
-                    <div class="col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
+                    <button @click="fight" class="col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
                         <p>Combattre</p>
-                    </div>
-                    <div class="col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
+                    </button>
+                    <button @click="end" class="col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
                         <p>Terminer la mission</p>
-                    </div>
-                    <div class="col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
+                    </button>
+                    <button @click="endWithRepair" class="col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
                         <p>Terminer la mission et réparer le vaisseau</p>
-                    </div>
+                    </button>
                 </div>
             </div>
             <div class="w-25 d-flex flex-column">
@@ -38,11 +55,11 @@
         <div class="d-flex justify-content-end row my-2">
             <div class="w-50">
                 <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>{{name}}</p>
+                    <p>{{props.player.name}}</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-2">
                     <p>Maitre - 0 CG</p>
-                    <p class="ship-font text-center">{{shipName}}</p>
+                    <p class="ship-font text-center">{{props.player.ship.name}}</p>
                     <p class="text-center">progress bar</p>
                 </div>
             </div>
