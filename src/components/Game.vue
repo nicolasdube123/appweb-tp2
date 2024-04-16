@@ -13,7 +13,7 @@
         1: "Débutant",
         2: "Confirmé",
         3: "Expert",
-        4: "Maître"
+        4: "Maitre"
     };
 
     const initialPlayerHealth = ref(props.game.player.ship.vitality)
@@ -97,7 +97,7 @@
                     <p>Mission en cours</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-1 ps-2 flex-fill">
-                    <p class="fs-5">1 / 5</p>
+                    <p class="fs-5">{{ props.game.mission }} / 5</p>
                     <p>Objectif: survivre à 5 missions en obtenant le plus de crédits</p>
                 </div>
             </div>
@@ -116,11 +116,11 @@
             </div>
             <div class="w-50">
                 <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>Nom de l'adversaire</p>
+                    <p>{{ props.game.opponent.name }}</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-2">
                     <p>{{ experiences[props.game.opponent.experience] }} - {{ props.game.opponent.credit }} CG</p>
-                    <p class="ship-font text-center">A-wing</p>
+                    <p class="ship-font text-center">{{ props.game.opponent.ship.name }}</p>
                     <progress :value="props.game.opponent.ship.vitality" :max="initialOpponentHealth" class="w-100"></progress>
                 </div>
             </div>
