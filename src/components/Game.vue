@@ -9,11 +9,17 @@
     });
 
     function fight() {
-        props.game.player.ship.vitality -= damageLost(4)
-        props.game.opponent.ship.vitality -= damageLost(props.game.opponent.experience)
-
-        console.log("Player: " + props.game.player.ship.vitality)
+        console.log("Player: " + props.game.player.ship.vitality + " Opponent EXP: " + props.game.opponent.experience)
         console.log("Opponent: " + props.game.opponent.ship.vitality)
+
+        if (playerHitsTarget(props.game.opponent.experience)) {
+            props.game.opponent.ship.vitality -= 3 + Math.random() * 3
+        } else {
+            props.game.player.ship.vitality -= 3 + Math.random() * 3
+        }
+
+        console.log("new Player: " + props.game.player.ship.vitality)
+        console.log("new Opponent: " + props.game.opponent.ship.vitality)
     }
 
     function end() {
@@ -21,11 +27,12 @@
     }
 
     function endWithRepair() {
-        props.game.player.credit -= (100 - props.game.player.ship.vitality) * 5
+        props.game.player.credit -= Math.ceil((100 - props.game.player.ship.vitality) * 5)
+        props.game.player.ship.vitality = 100
         end()
     }
 
-    function damageLost(experience : number) : number {
+    function playerHitsTarget(experience : number) : boolean {
         let odds: number
         
         switch (experience) {
@@ -49,10 +56,9 @@
         // random() retourne un nombre aléatoire entre 0 et 1
         // Si odds = 0.7, il y a 70% de chance que le nombre aléatoire soit inférieur, etc.
         if (Math.random() <= odds) {
-            // Nombre aléatoire entre 3 et 6
-            return 3 + Math.random() * 3
+            return false
         }
-        return 0
+        return true
     }
 </script>
 
@@ -92,7 +98,7 @@
                     <p>{{props.game.player.name}}</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-2">
-                    <p>Maitre - 0 CG</p>
+                    <p>Maitre - {{ props.game.player.credit }} CG</p>
                     <p class="ship-font text-center">{{props.game.player.ship.name}}</p>
                     <p class="text-center">progress bar</p>
                 </div>
