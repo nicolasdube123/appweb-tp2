@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const RANKING_PATH = '/ranking'
 
-export interface Ranking {
+export interface Player {
     id: String;
     name: String;
     score: number;
@@ -15,13 +15,13 @@ export class RankingService {
     this.API_URL = 'http://localhost:3000'
   }
 
-  async getRankings(): Promise<Array<Ranking>> {
+  async getRankings(): Promise<Array<Player>> {
     const { data } = await axios.get(this.API_URL + RANKING_PATH)
     return data
   }
 
-  async getRanking (songId: String):Promise<Ranking> {
-    const { data } = await axios.get(this.API_URL + RANKING_PATH + '/' + songId)
+  async getRanking (playerId: String):Promise<Player> {
+    const { data } = await axios.get(this.API_URL + RANKING_PATH + '/' + playerId)
     return data
   }
 }
