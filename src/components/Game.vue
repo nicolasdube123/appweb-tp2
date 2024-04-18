@@ -1,12 +1,20 @@
 <script setup lang="ts">
-    import { ref } from "vue";
-    import { Game } from "../App.vue"
+    import { ref, watch } from "vue";
+    import { Player } from "../App.vue";
+    import { Character } from "../script/characterService"
+
+    const emit = defineEmits(['nextRound', 'lost'])
 
     const props = defineProps({
-        game: {
-            type: Object as () => Game,
+        player: {
+            type: Object as () => Player,
             required: true
-        }
+        },
+        opponent : {
+            type: Object as () => Character,
+            required: true
+        },
+        mission: Number
     });
 
     const experiences: { [key: number]: string } = {
@@ -16,30 +24,49 @@
         4: "Maitre"
     };
 
-    const initialPlayerHealth = ref(props.game.player.ship.vitality)
-    const initialOpponentHealth = ref(props.game.opponent.ship.vitality)
+    const initialPlayerHealth = props.player.ship.vitality
+    let initialOpponentHealth = props.opponent.ship.vitality
+
+    watch(() => props.opponent, (newOpponent : Character) => {
+        initialOpponentHealth = newOpponent.ship.vitality;
+    })
 
     function fight() {
-        console.log("Player: " + props.game.player.ship.vitality + " Opponent EXP: " + props.game.opponent.experience)
-        console.log("Opponent: " + props.game.opponent.ship.vitality)
+        console.log("Player: " + props.player.ship.vitality + " Opponent EXP: " + props.opponent.experience)
+        console.log("Opponent: " + props.opponent.ship.vitality)
 
-        if (playerHitsTarget(props.game.opponent.experience)) {
-            props.game.opponent.ship.vitality -= 3 + Math.random() * 3
+        if (playerHitsTarget(props.opponent.experience)) {
+            props.opponent.ship.vitality -= 3 + Math.random() * 3
+            if (props.opponent.ship.vitality <= 0) {
+                props.opponent.ship.vitality = 0
+                winRound()
+            }
+
         } else {
-            props.game.player.ship.vitality -= 3 + Math.random() * 3
+            props.player.ship.vitality -= 3 + Math.random() * 3
+            if (props.player.ship.vitality <= 0) {
+                props.player.ship.vitality = 0
+                emit('lost')
+            }
         }
 
-        console.log("new Player: " + props.game.player.ship.vitality)
-        console.log("new Opponent: " + props.game.opponent.ship.vitality)
+        console.log("new Player: " + props.player.ship.vitality)
+        console.log("new Opponent: " + props.opponent.ship.vitality)
+    }
+
+    function winRound() {
+        props.player.credit += Number(props.opponent.credit)
+        props.opponent.credit = "0"
+        end()
     }
 
     function end() {
-
+        emit('nextRound')
     }
 
     function endWithRepair() {
-        props.game.player.credit -= Math.ceil((100 - props.game.player.ship.vitality) * 5)
-        props.game.player.ship.vitality = 100
+        props.player.credit -= Math.ceil((100 - props.player.ship.vitality) * 5)
+        props.player.ship.vitality = 100
         end()
     }
 
@@ -97,7 +124,7 @@
                     <p>Mission en cours</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-1 ps-2 flex-fill">
-                    <p class="fs-5">{{ props.game.mission }} / 5</p>
+                    <p class="fs-5">{{ props.mission }} / 5</p>
                     <p>Objectif: survivre à 5 missions en obtenant le plus de crédits</p>
                 </div>
             </div>
@@ -106,22 +133,22 @@
         <div class="d-flex justify-content-end row my-2">
             <div class="w-50">
                 <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>{{props.game.player.name}}</p>
+                    <p>{{props.player.name}}</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-2">
-                    <p>Maitre - {{ props.game.player.credit }} CG</p>
-                    <p class="ship-font text-center">{{props.game.player.ship.name}}</p>
-                    <progress :value="props.game.player.ship.vitality" :max="initialPlayerHealth" class="w-100"></progress>
+                    <p>Maitre - {{ props.player.credit }} CG</p>
+                    <p class="ship-font text-center">{{props.player.ship.name}}</p>
+                    <progress :value="props.player.ship.vitality" :max="initialPlayerHealth" class="w-100"></progress>
                 </div>
             </div>
             <div class="w-50">
                 <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>{{ props.game.opponent.name }}</p>
+                    <p>{{ props.opponent.name }}</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-2">
-                    <p>{{ experiences[props.game.opponent.experience] }} - {{ props.game.opponent.credit }} CG</p>
-                    <p class="ship-font text-center">{{ props.game.opponent.ship.name }}</p>
-                    <progress :value="props.game.opponent.ship.vitality" :max="initialOpponentHealth" class="w-100"></progress>
+                    <p>{{ experiences[props.opponent.experience] }} - {{ props.opponent.credit }} CG</p>
+                    <p class="ship-font text-center">{{ props.opponent.ship.name }}</p>
+                    <progress :value="props.opponent.ship.vitality" :max="initialOpponentHealth" class="w-100"></progress>
                 </div>
             </div>
         </div>

@@ -4,40 +4,54 @@
     import { ShipService, Ship, ShipsWithLife } from "./script/shipService";
     import { Character, CharacterService } from "./script/characterService";
 
-    interface Player {
+    export interface Player {
         name: String;
         credit: number;
         ship: ShipsWithLife;
     }
 
-    export interface Game {
-        player: Player;
-        opponent: Character;
-        mission: number
-    }
-
     const shipService: ShipService = new ShipService();
     const characterService: CharacterService = new CharacterService();
 
-    let game = ref<Game | null>();
+    let player = ref<Player | undefined>()
+    let opponent = ref<Character | undefined>()
+    let mission = ref<number>(1)
 
     async function createGame(formName: string, formShipId: string) {
         const playerShip : Ship = await shipService.getShip(formShipId)
-        const characters = await characterService.getCharacters()
 
-        game.value = {
-            player: {
-                name: formName,
-                credit: 100,
-                ship:  {
-                    id: playerShip.id,
-                    name: playerShip.name,
-                    vitality: 100
-                }
-            },
-            opponent: characters[Math.floor(Math.random() * characters.length)],
-            mission : 1
+        player.value = {
+            name: formName,
+            credit: 0,
+            ship:  {
+                id: playerShip.id,
+                name: playerShip.name,
+                vitality: 100
+            }
         }
+
+        const newOpponent = await getNewOpponent()
+        opponent.value = newOpponent
+
+        mission.value = 1
+    }
+
+    async function getNewOpponent() : Promise<Character> {
+        const characters = await characterService.getCharacters()
+        return characters[Math.floor(Math.random() * characters.length)]
+    }
+
+    async function incrementMission() {
+        const newOpponent = await getNewOpponent()
+        opponent.value = newOpponent
+
+        if (mission.value++ > 5) {
+            
+        }
+    }
+
+    function loseGame() {
+
     }
 </script>
 
@@ -48,8 +62,12 @@
             <RouterView v-slot="{ Component }">
                 <component 
                     :is="Component" 
-                    :game=game
+                    :player=player
+                    :opponent=opponent
+                    :mission=mission
                     v-on:submitForm="createGame"
+                    v-on:nextRound="incrementMission"
+                    v-on:lost="loseGame"
                 />
             </RouterView>
         </Suspense>
