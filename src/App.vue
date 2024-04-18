@@ -29,7 +29,7 @@
             ship:  {
                 id: playerShip.id,
                 name: playerShip.name,
-                vitality: 100
+                vitality: 1000
             }
         }
 
@@ -49,7 +49,7 @@
     }
 
     async function incrementMission() {
-        if (mission.value++ > 5) {
+        if (mission.value++ >= 5) {
             winGame()
         } else {
             const newOpponent = await getNewOpponent()
