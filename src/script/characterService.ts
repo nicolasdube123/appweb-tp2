@@ -7,7 +7,7 @@ export interface Character {
     id: String;
     name: String;
     credit: String;
-    experience: String;
+    experience: number;
     ship: ShipsWithLife;
 }
 
