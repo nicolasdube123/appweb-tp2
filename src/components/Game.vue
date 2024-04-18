@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, watch } from "vue";
+    import { watch } from "vue";
     import { Player } from "../App.vue";
     import { Character } from "../script/characterService"
 

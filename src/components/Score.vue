@@ -1,9 +1,25 @@
 <script setup lang="ts">
-    import { Player, RankingService } from "../script/rankingService"
-    //import { ref, onMounted } from 'vue';
+    import { Player } from "../App.vue";
+    import { RankingService } from "../script/rankingService"
 
-    const service: RankingService = new RankingService();
-    const ranking: Array<Player> = await service.getRankings();
+    const service: RankingService = new RankingService()
+    let ranking = await service.getRankings()
+
+    const props = defineProps({
+        player: {
+            type: Object as () => Player,
+            required: true
+        },
+        hasWon: Boolean
+    })
+
+    if(props.player != undefined && props.hasWon) {
+        ranking.push({
+            id: "Player",
+            name: props.player.name,
+            score: props.player.credit
+        })
+    }
 
     //Pour comparer par le score
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
