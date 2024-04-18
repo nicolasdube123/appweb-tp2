@@ -1,12 +1,44 @@
 <script setup lang="ts">
     import { ref } from "vue"
     import { Ship, ShipService } from "../script/shipService"
+    import { useRouter } from "vue-router";
+
+    const router = useRouter()
+    const emit = defineEmits<{
+        (event: 'submitForm', playerName: String, playerShip: String):void
+    }>()
 
     const service: ShipService = new ShipService();
     const ships: Array<Ship> = await service.getShips();
 
     const name = ref<String>()
-    const shipId = ref<String>()
+    const ship = ref<String>()
+
+    function submitForm() {
+        if (isFieldEmpty()) {
+            console.log("Champ vide")
+        }
+        else {
+            console.log("Champ pas vide")
+            //Les vérifications de undefined sont faites dans isFieldEmpty
+            // @ts-ignore
+            emit("submitForm", name.value, ship.value)
+            router.push({ name: "game" })
+        }
+    }
+
+    function isFieldEmpty() {
+        if (name.value == undefined || ship.value == undefined) {
+            return true
+        }
+        if (name.value.trim() === "" || ship.value.trim() === "") {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
 </script>
 
 <template>
@@ -22,11 +54,11 @@
             </div>
             <div class="form-group my-3">
                 <label for="shipSelect">Votre vaisseau:</label>
-                <select class="form-select" id="shipSelect" v-model="shipId">
+                <select class="form-select" id="shipSelect" v-model="ship">
                     <option v-for="ship in ships" :value="ship.id">{{ship.name}}</option>
                 </select>
             </div>
-            <RouterLink @click="$emit('submitForm', name, shipId)" to="/game" class="btn btn-primary btn-block w-100 mb-3">Démarrer la partie</RouterLink>
+            <a class="btn btn-primary btn-block w-100 mb-3" @click="submitForm()">Démarrer la partie</a>
         </form>
     </div>
 
