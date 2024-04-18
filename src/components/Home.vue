@@ -1,6 +1,6 @@
 <script setup lang="ts">
-    import { Ship, ShipService } from "../script/shipService"
     import { ref } from "vue"
+    import { Ship, ShipService } from "../script/shipService"
 
     const service: ShipService = new ShipService();
     const ships: Array<Ship> = await service.getShips();
