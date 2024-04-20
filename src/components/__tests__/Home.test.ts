@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
+import { flushPromises, shallowMount } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { onBeforeMount, onMounted } from 'vue'
 import Home from '../Home.vue'
@@ -9,8 +10,8 @@ import { RouterLink } from 'vue-router'
 describe('Home.vue', () => {
   it('Lorsque le formulaire est envoyé, si le formulaire est valide, emit les informations du formulaire', async () => {
     const wrapper = await mount(Home)
-    
     console.log(wrapper)
+    await flushPromises()
     const name = wrapper.find("input")
 
     
