@@ -5,11 +5,11 @@
 <template>
     <div class="popup fixed-top fixed-bottom fixed-left fixed-right d-flex align-items-center justify-content-center position-fixed">
         <div class="p-4 bg-white">
-            <h2>Are you sure?</h2>
-            <p>This will cancel your current game. Are you sure you want to proceed?</p>
+            <h2>Êtes-vous sûr?</h2>
+            <p>Cette action va terminer la partie. Voulez-vous procéder?</p>
             <div class="d-flex align-items-center justify-content-around">
-                <button @click="$emit('cancelPopup')" class="btn btn-danger">Cancel</button>
-                <button @click="$emit('proceedPopup')" class="btn btn-success">Proceed</button>
+                <button @click="$emit('cancelPopup')" class="btn btn-danger">Non</button>
+                <button @click="$emit('proceedPopup')" class="btn btn-success">Oui</button>
             </div>
         </div>
     </div>
