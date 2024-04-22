@@ -27,12 +27,10 @@
 
     function submitForm() {
         if (isFieldEmpty()) {
-            console.log("Champ vide")
             let divError = document.getElementById("err_verification") as HTMLElement
             divError.innerHTML=VERIFICATION_ERROR_MESSAGE
         }
         else {
-            console.log("Champ pas vide")
             //Les vérifications de undefined sont faites dans isFieldEmpty
             // @ts-ignore
             emit("submitForm", name.value, ship.value)
@@ -51,7 +49,6 @@
             return false
         }
     }
-
 </script>
 
 <template>
