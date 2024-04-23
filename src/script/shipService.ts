@@ -11,6 +11,10 @@ export interface ShipsWithLife {
   name: String;
   vitality: number;
 }
+export const NO_SERVICE_SHIP: Ship = {
+  id: "0",
+  name: "Erreur"
+}
 
 export class ShipService {
   API_URL: String

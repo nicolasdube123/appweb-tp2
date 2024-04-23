@@ -10,15 +10,23 @@
         ship: ShipsWithLife;
     }
 
+    export interface GameStatus {
+        mission: number;
+        hasWon: boolean;
+        hasStarted: boolean;
+    }
+
     const shipService: ShipService = new ShipService()
     const characterService: CharacterService = new CharacterService()
+    const charactersFought = ref<Array<Character>>([])
 
     let player = ref<Player | undefined>()
     let opponent = ref<Character | undefined>()
-    let mission = ref<number>(1)
-    let hasWon = ref<boolean>(false)
-
-    const charactersFought = ref<Array<Character>>([])
+    let gameStatus = ref <GameStatus>({
+        mission: 1,
+        hasWon: false,
+        hasStarted: false
+    })
 
     async function createGame(formName: string, formShipId: string) {
         const playerShip : Ship = await shipService.getShip(formShipId)
@@ -36,9 +44,13 @@
         const newOpponent = await getNewOpponent()
         opponent.value = newOpponent
 
-        mission.value = 1
+        // Reset de gameStatus
+        gameStatus.value = {
+            mission: 1,
+            hasWon: false,
+            hasStarted: true
+        }
 
-        hasWon.value = false
     }
 
     async function getNewOpponent() : Promise<Character> {
@@ -49,7 +61,7 @@
     }
 
     async function incrementMission() {
-        if (mission.value++ >= 5) {
+        if (gameStatus.value.mission++ > 5) {
             winGame()
         } else {
             const newOpponent = await getNewOpponent()
@@ -58,25 +70,24 @@
     }
 
     function loseGame() {
-
+        gameStatus.value.hasStarted = false
     }
 
     function winGame() {
-        hasWon.value = true;
+        gameStatus.value.hasWon = true
     }
 </script>
 
 <template>
     <div class="container">
-        <Header/>
+        <Header :gameStatus="gameStatus" @endGame="loseGame"/>
         <Suspense>
             <RouterView v-slot="{ Component }">
                 <component 
                     :is="Component" 
                     :player=player
                     :opponent=opponent
-                    :mission=mission
-                    :hasWon=hasWon
+                    :gameStatus=gameStatus
                     v-on:submitForm="createGame"
                     v-on:nextRound="incrementMission"
                     v-on:lost="loseGame"

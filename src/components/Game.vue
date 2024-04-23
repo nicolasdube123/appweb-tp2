@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { watch } from "vue";
-    import { Player } from "../App.vue";
+    import { Player, GameStatus } from "../App.vue";
     import { Character } from "../script/characterService"
 
     const emit = defineEmits(['nextRound', 'lost'])
@@ -14,15 +14,18 @@
             type: Object as () => Character,
             required: true
         },
-        mission: Number
-    });
+        gameStatus : {
+            type: Object as () => GameStatus,
+            required: true
+        }
+    })
 
     const experiences: { [key: number]: string } = {
         1: "Débutant",
         2: "Confirmé",
         3: "Expert",
         4: "Maitre"
-    };
+    }
 
     const initialPlayerHealth = props.player.ship.vitality
     let initialOpponentHealth = props.opponent.ship.vitality
@@ -32,9 +35,6 @@
     })
 
     function fight() {
-        console.log("Player: " + props.player.ship.vitality + " Opponent EXP: " + props.opponent.experience)
-        console.log("Opponent: " + props.opponent.ship.vitality)
-
         if (playerHitsTarget(props.opponent.experience)) {
             props.opponent.ship.vitality -= 3 + Math.random() * 3
             if (props.opponent.ship.vitality <= 0) {
@@ -49,9 +49,6 @@
                 emit('lost')
             }
         }
-
-        console.log("new Player: " + props.player.ship.vitality)
-        console.log("new Opponent: " + props.opponent.ship.vitality)
     }
 
     function winRound() {
@@ -87,7 +84,6 @@
                 odds = 0.7
                 break;
             default:
-                console.log(experience)
                 throw new Error("Invalid experience level")
         }
 
@@ -124,7 +120,7 @@
                     <p>Mission en cours</p>
                 </div>
                 <div class="bg-dark rounded-bottom p-1 ps-2 flex-fill">
-                    <p class="fs-5">{{ props.mission }} / 5</p>
+                    <p class="fs-5">{{ props.gameStatus.mission }} / 5</p>
                     <p>Objectif: survivre à 5 missions en obtenant le plus de crédits</p>
                 </div>
             </div>
