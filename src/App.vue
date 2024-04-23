@@ -12,7 +12,6 @@
 
     export interface GameStatus {
         mission: number;
-        hasWon: boolean;
         hasStarted: boolean;
     }
 
@@ -24,7 +23,6 @@
     let opponent = ref<Character | undefined>()
     let gameStatus = ref <GameStatus>({
         mission: 1,
-        hasWon: false,
         hasStarted: false
     })
 
@@ -37,7 +35,7 @@
             ship:  {
                 id: playerShip.id,
                 name: playerShip.name,
-                vitality: 1000
+                vitality: 100
             }
         }
 
@@ -47,7 +45,6 @@
         // Reset de gameStatus
         gameStatus.value = {
             mission: 1,
-            hasWon: false,
             hasStarted: true
         }
 
@@ -62,25 +59,22 @@
 
     async function incrementMission() {
         if (gameStatus.value.mission++ > 5) {
-            winGame()
+            endGame()
         } else {
             const newOpponent = await getNewOpponent()
             opponent.value = newOpponent
         }
     }
 
-    function loseGame() {
+    function endGame() {
         gameStatus.value.hasStarted = false
     }
 
-    function winGame() {
-        gameStatus.value.hasWon = true
-    }
 </script>
 
 <template>
     <div class="container">
-        <Header :gameStatus="gameStatus" @endGame="loseGame"/>
+        <Header :gameStatus="gameStatus" @endGame="endGame"/>
         <Suspense>
             <RouterView v-slot="{ Component }">
                 <component 
@@ -90,7 +84,7 @@
                     :gameStatus=gameStatus
                     v-on:submitForm="createGame"
                     v-on:nextRound="incrementMission"
-                    v-on:lost="loseGame"
+                    v-on:lost="endGame"
                 />
             </RouterView>
         </Suspense>

@@ -2,6 +2,9 @@
     import { watch } from "vue";
     import { Player, GameStatus } from "../App.vue";
     import { Character } from "../script/characterService"
+    import { useRouter } from "vue-router";
+    
+    const router = useRouter()
 
     const emit = defineEmits(['nextRound', 'lost'])
 
@@ -20,6 +23,7 @@
         }
     })
 
+    //importer de characterService plutôt?
     const experiences: { [key: number]: string } = {
         1: "Débutant",
         2: "Confirmé",
@@ -62,9 +66,17 @@
     }
 
     function endWithRepair() {
-        props.player.credit -= Math.ceil((100 - props.player.ship.vitality) * 5)
-        props.player.ship.vitality = 100
+        while (repair()) {}
         end()
+    }
+
+    function repair() : boolean {
+        if (props.player.ship.vitality < 100 && props.player.credit > 5) {
+            props.player.credit -= 5
+            props.player.ship.vitality++
+            return true
+        }
+        return false
     }
 
     function playerHitsTarget(experience : number) : boolean {
@@ -94,9 +106,14 @@
         }
         return true
     }
+    
+    function routeToHome() {
+        router.push('/')
+    }
 </script>
 
 <template>
+    <Popup v-if="!props.gameStatus.hasStarted" @proceedPopup="routeToHome"/>
     <div class="container">
         <div class="d-flex justify-content-end row my-2">
             <div class="w-75">

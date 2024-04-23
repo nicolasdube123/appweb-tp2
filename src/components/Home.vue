@@ -11,15 +11,15 @@
     const DB_ERROR_MESSAGE = "Il semble y avoir un problème! Veuillez réessayer plus tard."
     const VERIFICATION_ERROR_MESSAGE = "<h3>Veuillez vous assurer de remplir tous les champs.</h3>"
 
-    let isServiceAvailable = true;
-    const service: ShipService = new ShipService();
+    let isServiceAvailable = true
+    const service: ShipService = new ShipService()
     let ships: Array<Ship> = []
         try {
-            ships = await service.getShips();
+            ships = await service.getShips()
             console.log("A")
-            isServiceAvailable = true;
-    } catch (error) {
-        isServiceAvailable = false
+            isServiceAvailable = true
+        } catch (error) {
+            isServiceAvailable = false
     }
 
     const name = ref<String>()
