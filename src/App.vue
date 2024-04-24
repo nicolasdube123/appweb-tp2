@@ -72,11 +72,7 @@
 
     function endGame() {
         if (player.value && gameStatus.value) {
-            if (player.value.credit > 0 && player.value.ship.vitality > 0) {
-                gameStatus.value.hasWon = true
-            } else {
-                gameStatus.value.hasWon = false
-            }
+            gameStatus.value.hasWon = (player.value.ship.vitality > 0)
             gameStatus.value.hasStarted = false
         }
     }

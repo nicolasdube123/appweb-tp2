@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { Player } from "../App.vue";
+    import { GameStatus, Player } from "../App.vue";
     import { RankingService } from "../script/rankingService"
 
     const service: RankingService = new RankingService()
@@ -10,10 +10,13 @@
             type: Object as () => Player,
             required: true
         },
-        hasWon: Boolean
+        gameStatus : {
+            type: Object as () => GameStatus,
+            required: true
+        }
     })
 
-    if(props.player != undefined && props.hasWon) {
+    if(props.player != undefined && props.gameStatus.hasWon) {
         ranking.push({
             id: "Player",
             name: props.player.name,

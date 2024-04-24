@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { watch } from "vue";
+    import { ref, watch } from "vue";
     import { Player, GameStatus } from "../App.vue";
     import { Character } from "../script/characterService"
     import { useRouter } from "vue-router";
@@ -35,6 +35,8 @@
     const initialPlayerHealth = props.player.ship.vitality
     let initialOpponentHealth = props.opponent.ship.vitality
 
+    const creditsWonInLastRound = ref<number>(0)
+
     watch(() => props.opponent, (newOpponent : Character) => {
         initialOpponentHealth = newOpponent.ship.vitality;
     })
@@ -57,12 +59,14 @@
     }
 
     function winRound() {
+        end()
+        creditsWonInLastRound.value = Number(props.opponent.credit)
         props.player.credit += Number(props.opponent.credit)
         props.opponent.credit = "0"
-        end()
     }
 
     function end() {
+        creditsWonInLastRound.value = 0
         emit('nextRound')
     }
 
@@ -187,6 +191,7 @@
             </div>
         </div>
     </div>
+    <span v-if="creditsWonInLastRound > 0">Vous avez gagné {{ creditsWonInLastRound }} CG.</span>
 </template>
   
 <style scoped>
