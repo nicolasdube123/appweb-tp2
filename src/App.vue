@@ -13,6 +13,7 @@
     export interface GameStatus {
         mission: number;
         hasStarted: boolean;
+        hasWon: boolean | undefined;
     }
 
     const shipService: ShipService = new ShipService()
@@ -23,7 +24,8 @@
     let opponent = ref<Character | undefined>()
     let gameStatus = ref <GameStatus>({
         mission: 1,
-        hasStarted: false
+        hasStarted: false,
+        hasWon: undefined
     })
 
     async function createGame(formName: string, formShipId: string) {
@@ -45,7 +47,8 @@
         // Reset de gameStatus
         gameStatus.value = {
             mission: 1,
-            hasStarted: true
+            hasStarted: true,
+            hasWon: undefined
         }
 
     }
@@ -58,16 +61,24 @@
     }
 
     async function incrementMission() {
-        if (gameStatus.value.mission++ > 5) {
+        if (gameStatus.value.mission >= 5) {
             endGame()
         } else {
+            gameStatus.value.mission++
             const newOpponent = await getNewOpponent()
             opponent.value = newOpponent
         }
     }
 
     function endGame() {
-        gameStatus.value.hasStarted = false
+        if (player.value && gameStatus.value) {
+            if (player.value.credit > 0 && player.value.ship.vitality > 0) {
+                gameStatus.value.hasWon = true
+            } else {
+                gameStatus.value.hasWon = false
+            }
+            gameStatus.value.hasStarted = false
+        }
     }
 
 </script>

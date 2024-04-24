@@ -3,7 +3,8 @@
     import { Player, GameStatus } from "../App.vue";
     import { Character } from "../script/characterService"
     import { useRouter } from "vue-router";
-    
+    import Popup from "./Popup.vue"
+
     const router = useRouter()
 
     const emit = defineEmits(['nextRound', 'lost'])
@@ -71,7 +72,7 @@
     }
 
     function repair() : boolean {
-        if (props.player.ship.vitality < 100 && props.player.credit > 5) {
+        if (props.player.ship.vitality < 100 && props.player.credit >= 5) {
             props.player.credit -= 5
             props.player.ship.vitality++
             return true
@@ -110,10 +111,30 @@
     function routeToHome() {
         router.push('/')
     }
+
+    function routeToRanking() {
+        router.push('/ranking')
+    }
 </script>
 
 <template>
-    <Popup v-if="!props.gameStatus.hasStarted" @proceedPopup="routeToHome"/>
+    
+    <!--Apparaît si le joueur gagne la partie-->
+    <Popup v-if="!props.gameStatus.hasStarted && props.gameStatus.hasWon" 
+        @proceedPopup="routeToRanking"
+        :optionToCancel=false
+        :title="'Partie gagnée'"
+        :text="'Vous avez gagné un total de ' + props.player.credit + ' CG.\nRedirection vers le score'"
+    />
+
+    <!--Apparaît si le joueur perd la partie-->
+    <Popup v-if="!props.gameStatus.hasStarted && !props.gameStatus.hasWon" 
+        @proceedPopup="routeToHome"
+        :optionToCancel=false
+        :title="'Partie terminée'"
+        :text="'Meilleure chance la prochaine fois...\nRedirection vers la page d\'accueil'"
+    />
+
     <div class="container">
         <div class="d-flex justify-content-end row my-2">
             <div class="w-75">
