@@ -1,0 +1,6 @@
+//Xavier méthode
+    const wrapper = mount(Home,
+      {global : {
+        plugins : [router]
+      }}
+    )

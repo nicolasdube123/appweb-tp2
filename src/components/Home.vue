@@ -14,10 +14,10 @@
     let isServiceAvailable = true;
     const service: ShipService = new ShipService();
     let ships: Array<Ship> = []
-        try {
-            ships = await service.getShips();
-            console.log("A")
-            isServiceAvailable = true;
+    try {
+        ships = await service.getShips();
+        console.log("A")
+        isServiceAvailable = true;
     } catch (error) {
         isServiceAvailable = false
     }
