@@ -4,6 +4,7 @@
     import { Character } from "../script/characterService"
     import { useRouter } from "vue-router";
     import Popup from "../components/Popup.vue"
+    import Action from "../components/Action.vue"
 
     const router = useRouter()
 
@@ -141,22 +142,8 @@
 
     <div class="container">
         <div class="d-flex justify-content-end row my-2">
-            <div class="w-75">
-                <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>Actions</p>
-                </div>
-                <div class="bg-dark rounded-bottom row">
-                    <button @click="fight" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
-                        <p>Combattre</p>
-                    </button>
-                    <button @click="end" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
-                        <p>Terminer la mission</p>
-                    </button>
-                    <button @click="endWithRepair" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
-                        <p>Terminer la mission et réparer le vaisseau</p>
-                    </button>
-                </div>
-            </div>
+            <Action @fight="fight" @end="end" @endWithRepair="endWithRepair"/>
+
             <div class="w-25 d-flex flex-column">
                 <div class="bg-primary rounded-top p-1 ps-2">
                     <p>Mission en cours</p>
