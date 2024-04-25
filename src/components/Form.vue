@@ -1,14 +1,50 @@
 <script setup lang="ts">
-    import { watch } from 'vue';
+    import { watch, ref } from 'vue';
+    import { Ship } from "../script/shipService"
 
-    const props = defineProps<{ 
-        isServiceAvailable: boolean
+    const props = defineProps<{
+        isServiceAvailable: boolean,
+        ships: Array<Ship>
     }>()
-    let isServiceAvailable: boolean = false
+    let isServiceAvailable: boolean = props.isServiceAvailable
+
+    const emit = defineEmits<{
+        (event: 'submitForm', playerName: String, playerShip: String):void
+    }>()
 
     watch(() => props.isServiceAvailable, (newValue) => {
         isServiceAvailable = newValue
     })
+
+    const DB_ERROR_MESSAGE = "Il semble y avoir un problème! Veuillez réessayer plus tard."
+    const VERIFICATION_ERROR_MESSAGE = "<h3>Veuillez vous assurer de remplir tous les champs.</h3>"
+
+    const name = ref<String>()
+    const ship = ref<String>()
+
+    function submitForm() {
+        if (isFieldEmpty()) {
+            let divError = document.getElementById("err_verification") as HTMLElement
+            divError.innerHTML=VERIFICATION_ERROR_MESSAGE
+        }
+        else {
+            //Les vérifications de undefined sont faites dans isFieldEmpty
+            // @ts-ignore
+            emit("submitForm", name.value, ship.value)
+        }
+    }
+
+    function isFieldEmpty() {
+        if (name.value == undefined || ship.value == undefined) {
+            return true
+        }
+        if (name.value.trim() === "" || ship.value.trim() === "") {
+            return true
+        }
+        else {
+            return false
+        }
+    }
 </script>
 
 <template>
@@ -43,4 +79,8 @@
 </template>
 
 <style scoped>
+    .erreur_message {
+      color: red;
+      text-align: center;
+    }
 </style>

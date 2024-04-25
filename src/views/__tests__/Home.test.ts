@@ -11,11 +11,4 @@ describe('Home.vue', () => {
     
     expect(name.exists()).toBe(true)
   })
-
-  it("Lors du lancement de l'application", async () => {
-    const name = wrapper.find("#name")
-    console.log(router)
-    
-    expect(name.exists()).toBe(true)
-  })
 })
