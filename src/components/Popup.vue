@@ -1,15 +1,19 @@
 <script setup lang="ts">
-
+    const props = defineProps({
+        optionToCancel: Boolean,
+        title: String,
+        text: String
+    })
 </script>
 
 <template>
     <div class="popup fixed-top fixed-bottom fixed-left fixed-right d-flex align-items-center justify-content-center position-fixed">
         <div class="p-4 bg-white">
-            <h2>Êtes-vous sûr?</h2>
-            <p>Cette action va terminer la partie. Voulez-vous procéder?</p>
+            <h2>{{ props.title }}</h2>
+            <p>{{ props.text }}</p>
             <div class="d-flex align-items-center justify-content-around">
-                <button @click="$emit('cancelPopup')" class="btn btn-danger">Non</button>
-                <button @click="$emit('proceedPopup')" class="btn btn-success">Oui</button>
+                <button v-if="props.optionToCancel" @click="$emit('cancelPopup')" class="btn btn-danger">Non</button>
+                <button @click="$emit('proceedPopup')" class="btn btn-success">Ok</button>
             </div>
         </div>
     </div>

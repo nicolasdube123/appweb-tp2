@@ -1,7 +1,11 @@
 <script setup lang="ts">
-    import { watch } from "vue";
+    import { ref, watch } from "vue";
     import { Player, GameStatus } from "../App.vue";
     import { Character } from "../script/characterService"
+    import { useRouter } from "vue-router";
+    import Popup from "./Popup.vue"
+
+    const router = useRouter()
 
     const emit = defineEmits(['nextRound', 'lost'])
 
@@ -20,6 +24,7 @@
         }
     })
 
+    //importer de characterService plutôt?
     const experiences: { [key: number]: string } = {
         1: "Débutant",
         2: "Confirmé",
@@ -29,6 +34,8 @@
 
     const initialPlayerHealth = props.player.ship.vitality
     let initialOpponentHealth = props.opponent.ship.vitality
+
+    const creditsWonInLastRound = ref<number>(0)
 
     watch(() => props.opponent, (newOpponent : Character) => {
         initialOpponentHealth = newOpponent.ship.vitality;
@@ -52,19 +59,29 @@
     }
 
     function winRound() {
+        end()
+        creditsWonInLastRound.value = Number(props.opponent.credit)
         props.player.credit += Number(props.opponent.credit)
         props.opponent.credit = "0"
-        end()
     }
 
     function end() {
+        creditsWonInLastRound.value = 0
         emit('nextRound')
     }
 
     function endWithRepair() {
-        props.player.credit -= Math.ceil((100 - props.player.ship.vitality) * 5)
-        props.player.ship.vitality = 100
+        while (repair()) {}
         end()
+    }
+
+    function repair() : boolean {
+        if (props.player.ship.vitality < 100 && props.player.credit >= 5) {
+            props.player.credit -= 5
+            props.player.ship.vitality++
+            return true
+        }
+        return false
     }
 
     function playerHitsTarget(experience : number) : boolean {
@@ -94,9 +111,34 @@
         }
         return true
     }
+    
+    function routeToHome() {
+        router.push('/')
+    }
+
+    function routeToRanking() {
+        router.push('/ranking')
+    }
 </script>
 
 <template>
+    
+    <!--Apparaît si le joueur gagne la partie-->
+    <Popup v-if="!props.gameStatus.hasStarted && props.gameStatus.hasWon" 
+        @proceedPopup="routeToRanking"
+        :optionToCancel=false
+        :title="'Partie gagnée'"
+        :text="'Vous avez gagné un total de ' + props.player.credit + ' CG.\nRedirection vers le score'"
+    />
+
+    <!--Apparaît si le joueur perd la partie-->
+    <Popup v-if="!props.gameStatus.hasStarted && !props.gameStatus.hasWon" 
+        @proceedPopup="routeToHome"
+        :optionToCancel=false
+        :title="'Partie terminée'"
+        :text="'Meilleure chance la prochaine fois...\nRedirection vers la page d\'accueil'"
+    />
+
     <div class="container">
         <div class="d-flex justify-content-end row my-2">
             <div class="w-75">
@@ -149,6 +191,7 @@
             </div>
         </div>
     </div>
+    <span v-if="creditsWonInLastRound > 0">Vous avez gagné {{ creditsWonInLastRound }} CG.</span>
 </template>
   
 <style scoped>

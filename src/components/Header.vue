@@ -36,7 +36,13 @@
 </script>
 
 <template>
-        <Popup v-if="isPopupActive" @cancelPopup="closePopup" @proceedPopup="route"/>
+        <Popup v-if="isPopupActive"
+            @cancelPopup="closePopup" 
+            @proceedPopup="route"
+            :optionToCancel=true
+            :title="'Êtes-vous sûrs?'"
+            :text="'Cette action va terminer la partie. Voulez-vous procéder?'"
+        />
         <div class="d-flex flex-row">
             <template v-if="props.gameStatus.hasStarted">
                 <RouterLink to="/game" class="text-decoration-none h2 me-3">Titre du jeu</RouterLink>

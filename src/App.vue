@@ -12,8 +12,8 @@
 
     export interface GameStatus {
         mission: number;
-        hasWon: boolean;
         hasStarted: boolean;
+        hasWon: boolean | undefined;
     }
 
     const shipService: ShipService = new ShipService()
@@ -24,8 +24,8 @@
     let opponent = ref<Character | undefined>()
     let gameStatus = ref <GameStatus>({
         mission: 1,
-        hasWon: false,
-        hasStarted: false
+        hasStarted: false,
+        hasWon: undefined
     })
 
     async function createGame(formName: string, formShipId: string) {
@@ -47,8 +47,8 @@
         // Reset de gameStatus
         gameStatus.value = {
             mission: 1,
-            hasWon: false,
-            hasStarted: true
+            hasStarted: true,
+            hasWon: undefined
         }
 
     }
@@ -61,26 +61,27 @@
     }
 
     async function incrementMission() {
-        if (gameStatus.value.mission++ > 5) {
-            winGame()
+        if (gameStatus.value.mission >= 5) {
+            endGame()
         } else {
+            gameStatus.value.mission++
             const newOpponent = await getNewOpponent()
             opponent.value = newOpponent
         }
     }
 
-    function loseGame() {
-        gameStatus.value.hasStarted = false
+    function endGame() {
+        if (player.value && gameStatus.value) {
+            gameStatus.value.hasWon = (player.value.ship.vitality > 0)
+            gameStatus.value.hasStarted = false
+        }
     }
 
-    function winGame() {
-        gameStatus.value.hasWon = true
-    }
 </script>
 
 <template>
     <div class="container">
-        <Header :gameStatus="gameStatus" @endGame="loseGame"/>
+        <Header :gameStatus="gameStatus" @endGame="endGame"/>
         <Suspense>
             <RouterView v-slot="{ Component }">
                 <component 
@@ -90,7 +91,7 @@
                     :gameStatus=gameStatus
                     v-on:submitForm="createGame"
                     v-on:nextRound="incrementMission"
-                    v-on:lost="loseGame"
+                    v-on:lost="endGame"
                 />
             </RouterView>
         </Suspense>
