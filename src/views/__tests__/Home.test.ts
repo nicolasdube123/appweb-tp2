@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import Home from '../Home.vue'
+import Home from '../HomeView.vue'
 
 // TODO() : Mettre un component qui fait juste l'affichage
 

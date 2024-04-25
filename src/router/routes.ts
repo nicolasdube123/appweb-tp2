@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import HomeView from "../components/HomeView.vue"
+import HomeView from "../views/HomeView.vue"
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -10,13 +10,13 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/game',
         name: 'game',
-        component: () => import('../components/GameView.vue'),
+        component: () => import('../views/GameView.vue'),
         props: true 
     },
     {
         path: '/ranking',
         name: 'ranking',
-        component: () => import('../components/ScoreView.vue')
+        component: () => import('../views/ScoreView.vue')
     }
 ]
 

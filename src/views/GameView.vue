@@ -3,7 +3,7 @@
     import { Player, GameStatus } from "../App.vue";
     import { Character } from "../script/characterService"
     import { useRouter } from "vue-router";
-    import Popup from "./Popup.vue"
+    import Popup from "../components/Popup.vue"
 
     const router = useRouter()
 
