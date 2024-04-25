@@ -5,6 +5,7 @@
     import { useRouter } from "vue-router";
     import Popup from "../components/Popup.vue"
     import Action from "../components/Action.vue"
+    import Mission from "../components/Mission.vue"
 
     const router = useRouter()
 
@@ -144,15 +145,7 @@
         <div class="d-flex justify-content-end row my-2">
             <Action @fight="fight" @end="end" @endWithRepair="endWithRepair"/>
 
-            <div class="w-25 d-flex flex-column">
-                <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>Mission en cours</p>
-                </div>
-                <div class="bg-dark rounded-bottom p-1 ps-2 flex-fill">
-                    <p class="fs-5">{{ props.gameStatus.mission }} / 5</p>
-                    <p>Objectif: survivre à 5 missions en obtenant le plus de crédits</p>
-                </div>
-            </div>
+            <Mission :mission="props.gameStatus.mission"/>
         </div>
 
         <div class="d-flex justify-content-end row my-2">
