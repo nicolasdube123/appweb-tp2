@@ -7,6 +7,7 @@
     import Action from "../components/Action.vue"
     import Mission from "../components/Mission.vue"
     import PlayerComponent from "../components/Player.vue"
+    import Opponent from "../components/Opponent.vue"
 
     const router = useRouter()
 
@@ -26,14 +27,6 @@
             required: true
         }
     })
-
-    //importer de characterService plutôt?
-    const experiences: { [key: number]: string } = {
-        1: "Débutant",
-        2: "Confirmé",
-        3: "Expert",
-        4: "Maitre"
-    }
 
     const initialPlayerHealth = props.player.ship.vitality
     let initialOpponentHealth = props.opponent.ship.vitality
@@ -151,16 +144,7 @@
 
         <div class="d-flex justify-content-end row my-2">
             <PlayerComponent :player="props.player" :initialPlayerHealth="initialPlayerHealth"/>
-            <div class="w-50">
-                <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>{{ props.opponent.name }}</p>
-                </div>
-                <div class="bg-dark rounded-bottom p-2">
-                    <p>{{ experiences[props.opponent.experience] }} - {{ props.opponent.credit }} CG</p>
-                    <p class="ship-font text-center">{{ props.opponent.ship.name }}</p>
-                    <progress :value="props.opponent.ship.vitality" :max="initialOpponentHealth" class="w-100"></progress>
-                </div>
-            </div>
+            <Opponent :opponent="props.opponent" :initialOpponentHealth="initialOpponentHealth"/>
         </div>
     </div>
     <span v-if="creditsWonInLastRound > 0">Vous avez gagné {{ creditsWonInLastRound }} CG.</span>
