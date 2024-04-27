@@ -17,7 +17,7 @@
     })
 
     const DB_ERROR_MESSAGE = "Il semble y avoir un problème! Veuillez réessayer plus tard."
-    const VERIFICATION_ERROR_MESSAGE = "<h3>Veuillez vous assurer de remplir tous les champs.</h3>"
+    const VERIFICATION_ERROR_MESSAGE = "Veuillez vous assurer de remplir tous les champs."
 
     const name = ref<String>()
     const ship = ref<String>()
@@ -33,8 +33,8 @@
         {
             //Les vérifications de undefined sont faites dans isFieldEmpty
             // @ts-ignore
+            emit("submitForm", name.value, ship.value?.toString)
             hasValidationErrors.value = false
-            emit("submitForm", name.value, ship.value)
         }
     }
 
@@ -42,7 +42,7 @@
         if (name.value == undefined || ship.value == undefined) {
             return true
         }
-        if (name.value.trim() === "" || ship.value.trim() === "") {
+        if (name.value.trim() === "" || ship.value === "") {
             return true
         }
         else {
@@ -57,7 +57,7 @@
         <span class="h2 text-secondary"> survivre à 5 missions en obtenant le plus de crédits galactiques.</span>
     </p>
     <div class="error-msg" v-if="!isServiceAvailable"><h3>{{ DB_ERROR_MESSAGE }}</h3></div>
-    <div class="error-msg" v-if="hasValidationErrors">{{ VERIFICATION_ERROR_MESSAGE }}</div>
+    <div class="error-msg" v-if="hasValidationErrors"><h3>{{ VERIFICATION_ERROR_MESSAGE }}</h3></div>
     <div id="shipForm" class="container w-25 border rounded">
         <form>
             <div class="form-group my-3">

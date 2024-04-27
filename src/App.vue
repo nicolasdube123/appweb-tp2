@@ -3,6 +3,7 @@
     import { ref } from "vue"
     import { ShipService, Ship, ShipsWithLife } from "./script/shipService";
     import { Character, CharacterService } from "./script/characterService";
+    import { RankingService } from "./script/rankingService";
 
     export interface Player {
         name: String;
@@ -18,6 +19,7 @@
 
     const shipService: ShipService = new ShipService()
     const characterService: CharacterService = new CharacterService()
+    const rankingService: RankingService = new RankingService()
     const charactersFought = ref<Array<Character>>([])
 
     let player = ref<Player | undefined>()

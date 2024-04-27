@@ -11,7 +11,12 @@
 
     const router = useRouter()
 
-    const emit = defineEmits(['nextRound', 'lost'])
+    //const emit = defineEmits(['nextRound', 'lost'])
+    const emit = defineEmits<{
+        (event: 'nextRound'):void,
+        (event: 'lost'):void,
+        (event: 'addPlayerToRanking'):void
+    }>()
 
     const props = defineProps({
         player: {
@@ -112,6 +117,11 @@
         router.push('/')
     }
 
+    function playerHasWon() {
+        
+        routeToRanking
+    }
+
     function routeToRanking() {
         router.push('/ranking')
     }
@@ -121,7 +131,7 @@
     
     <!--Apparaît si le joueur gagne la partie-->
     <Popup v-if="!props.gameStatus.hasStarted && props.gameStatus.hasWon" 
-        @proceedPopup="routeToRanking"
+        @proceedPopup="playerHasWon"
         :optionToCancel=false
         :title="'Partie gagnée'"
         :text="'Vous avez gagné un total de ' + props.player.credit + ' CG.\nRedirection vers le score'"
