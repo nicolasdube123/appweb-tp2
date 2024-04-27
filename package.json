@@ -8,7 +8,7 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "backend": "json-server --watch ./backend/db.default.json",
+    "backend": "copy-files-from-to --config ./backend/copy-db-dev.json && json-server --watch ./backend/db-dev.json .js",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs"
