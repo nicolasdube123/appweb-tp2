@@ -6,14 +6,14 @@
         isServiceAvailable: boolean,
         ships: Array<Ship>
     }>()
-    let isServiceAvailable: boolean = props.isServiceAvailable
+    const isServiceAvailable = ref<Boolean>(props.isServiceAvailable)
 
     const emit = defineEmits<{
         (event: 'submitForm', playerName: String, playerShip: String):void
     }>()
 
     watch(() => props.isServiceAvailable, (newValue) => {
-        isServiceAvailable = newValue
+        isServiceAvailable.value = newValue
     })
 
     const DB_ERROR_MESSAGE = "Il semble y avoir un problème! Veuillez réessayer plus tard."
@@ -22,14 +22,18 @@
     const name = ref<String>()
     const ship = ref<String>()
 
+    const hasValidationErrors = ref<Boolean>(false)
+
     function submitForm() {
-        if (isFieldEmpty()) {
-            let divError = document.getElementById("err_verification") as HTMLElement
-            divError.innerHTML=VERIFICATION_ERROR_MESSAGE
+        if (isFieldEmpty()) 
+        {
+            hasValidationErrors.value = true
         }
-        else {
+        else 
+        {
             //Les vérifications de undefined sont faites dans isFieldEmpty
             // @ts-ignore
+            hasValidationErrors.value = false
             emit("submitForm", name.value, ship.value)
         }
     }
@@ -52,8 +56,8 @@
         <span class="h1">Votre objectif:</span>
         <span class="h2 text-secondary"> survivre à 5 missions en obtenant le plus de crédits galactiques.</span>
     </p>
-    <div class="erreur_message" v-if="!isServiceAvailable"><h3>{{ DB_ERROR_MESSAGE }}</h3></div>
-    <div class="erreur_message" id="err_verification"></div>
+    <div class="error-msg" v-if="!isServiceAvailable"><h3>{{ DB_ERROR_MESSAGE }}</h3></div>
+    <div class="error-msg" v-if="hasValidationErrors">{{ VERIFICATION_ERROR_MESSAGE }}</div>
     <div id="shipForm" class="container w-25 border rounded">
         <form>
             <div class="form-group my-3">
@@ -79,7 +83,7 @@
 </template>
 
 <style scoped>
-    .erreur_message {
+    .error-msg {
       color: red;
       text-align: center;
     }
