@@ -1,49 +1,40 @@
 <script setup lang="ts">
-    import { ref } from "vue"
-    import { Ship, ShipService } from "../script/shipService"
-    import { useRouter } from "vue-router";
+    import { watch, ref } from 'vue';
+    import { Ship } from "../script/shipService"
 
-    const router = useRouter()
+    const props = defineProps<{
+        isServiceAvailable: boolean,
+        ships: Array<Ship>
+    }>()
+    const isServiceAvailable = ref<Boolean>(props.isServiceAvailable)
+
     const emit = defineEmits<{
         (event: 'submitForm', playerName: String, playerShip: String):void
     }>()
 
+    watch(() => props.isServiceAvailable, (newValue) => {
+        isServiceAvailable.value = newValue
+    })
+
     const DB_ERROR_MESSAGE = "Il semble y avoir un problème! Veuillez réessayer plus tard."
     const VERIFICATION_ERROR_MESSAGE = "<h3>Veuillez vous assurer de remplir tous les champs.</h3>"
-
-    let isServiceAvailable = true
-    const service: ShipService = new ShipService()
-    let ships: Array<Ship> = []
-<<<<<<< HEAD
-    try {
-        ships = await service.getShips();
-        console.log("A")
-        isServiceAvailable = true;
-    } catch (error) {
-        isServiceAvailable = false
-=======
-        try {
-            ships = await service.getShips()
-            console.log("A")
-            isServiceAvailable = true
-        } catch (error) {
-            isServiceAvailable = false
->>>>>>> b4aa1d9a7c4a73a5cce3b32340f9030744d7616c
-    }
 
     const name = ref<String>()
     const ship = ref<String>()
 
+    const hasValidationErrors = ref<Boolean>(false)
+
     function submitForm() {
-        if (isFieldEmpty()) {
-            let divError = document.getElementById("err_verification") as HTMLElement
-            divError.innerHTML=VERIFICATION_ERROR_MESSAGE
+        if (isFieldEmpty()) 
+        {
+            hasValidationErrors.value = true
         }
-        else {
+        else 
+        {
             //Les vérifications de undefined sont faites dans isFieldEmpty
             // @ts-ignore
+            hasValidationErrors.value = false
             emit("submitForm", name.value, ship.value)
-            router.push({ name: "game" })
         }
     }
 
@@ -65,8 +56,8 @@
         <span class="h1">Votre objectif:</span>
         <span class="h2 text-secondary"> survivre à 5 missions en obtenant le plus de crédits galactiques.</span>
     </p>
-    <div class="erreur_message" v-if="!isServiceAvailable"><h3>{{ DB_ERROR_MESSAGE }}</h3></div>
-    <div class="erreur_message" id="err_verification"></div>
+    <div class="error-msg" v-if="!isServiceAvailable"><h3>{{ DB_ERROR_MESSAGE }}</h3></div>
+    <div class="error-msg" v-if="hasValidationErrors">{{ VERIFICATION_ERROR_MESSAGE }}</div>
     <div id="shipForm" class="container w-25 border rounded">
         <form>
             <div class="form-group my-3">
@@ -89,11 +80,10 @@
             <a class="btn btn-primary btn-block w-100 mb-3" @click="submitForm()">Démarrer la partie</a>
         </form>
     </div>
-
 </template>
 
 <style scoped>
-    .erreur_message {
+    .error-msg {
       color: red;
       text-align: center;
     }

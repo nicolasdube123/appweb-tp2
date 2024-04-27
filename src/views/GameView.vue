@@ -3,7 +3,11 @@
     import { Player, GameStatus } from "../App.vue";
     import { Character } from "../script/characterService"
     import { useRouter } from "vue-router";
-    import Popup from "./Popup.vue"
+    import Popup from "../components/Popup.vue"
+    import Action from "../components/Action.vue"
+    import Mission from "../components/Mission.vue"
+    import PlayerComponent from "../components/Player.vue"
+    import Opponent from "../components/Opponent.vue"
 
     const router = useRouter()
 
@@ -23,14 +27,6 @@
             required: true
         }
     })
-
-    //importer de characterService plutôt?
-    const experiences: { [key: number]: string } = {
-        1: "Débutant",
-        2: "Confirmé",
-        3: "Expert",
-        4: "Maitre"
-    }
 
     const initialPlayerHealth = props.player.ship.vitality
     let initialOpponentHealth = props.opponent.ship.vitality
@@ -141,54 +137,14 @@
 
     <div class="container">
         <div class="d-flex justify-content-end row my-2">
-            <div class="w-75">
-                <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>Actions</p>
-                </div>
-                <div class="bg-dark rounded-bottom row">
-                    <button @click="fight" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
-                        <p>Combattre</p>
-                    </button>
-                    <button @click="end" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
-                        <p>Terminer la mission</p>
-                    </button>
-                    <button @click="endWithRepair" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
-                        <p>Terminer la mission et réparer le vaisseau</p>
-                    </button>
-                </div>
-            </div>
-            <div class="w-25 d-flex flex-column">
-                <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>Mission en cours</p>
-                </div>
-                <div class="bg-dark rounded-bottom p-1 ps-2 flex-fill">
-                    <p class="fs-5">{{ props.gameStatus.mission }} / 5</p>
-                    <p>Objectif: survivre à 5 missions en obtenant le plus de crédits</p>
-                </div>
-            </div>
+            <Action @fight="fight" @end="end" @endWithRepair="endWithRepair"/>
+
+            <Mission :mission="props.gameStatus.mission"/>
         </div>
 
         <div class="d-flex justify-content-end row my-2">
-            <div class="w-50">
-                <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>{{props.player.name}}</p>
-                </div>
-                <div class="bg-dark rounded-bottom p-2">
-                    <p>Maitre - {{ props.player.credit }} CG</p>
-                    <p class="ship-font text-center">{{props.player.ship.name}}</p>
-                    <progress :value="props.player.ship.vitality" :max="initialPlayerHealth" class="w-100"></progress>
-                </div>
-            </div>
-            <div class="w-50">
-                <div class="bg-primary rounded-top p-1 ps-2">
-                    <p>{{ props.opponent.name }}</p>
-                </div>
-                <div class="bg-dark rounded-bottom p-2">
-                    <p>{{ experiences[props.opponent.experience] }} - {{ props.opponent.credit }} CG</p>
-                    <p class="ship-font text-center">{{ props.opponent.ship.name }}</p>
-                    <progress :value="props.opponent.ship.vitality" :max="initialOpponentHealth" class="w-100"></progress>
-                </div>
-            </div>
+            <PlayerComponent :player="props.player" :initialPlayerHealth="initialPlayerHealth"/>
+            <Opponent :opponent="props.opponent" :initialOpponentHealth="initialOpponentHealth"/>
         </div>
     </div>
     <span v-if="creditsWonInLastRound > 0">Vous avez gagné {{ creditsWonInLastRound }} CG.</span>
