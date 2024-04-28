@@ -6,11 +6,11 @@
 <template>
     <div class="w-25 d-flex flex-column">
         <div class="bg-primary rounded-top p-1 ps-2">
-            <p>Mission en cours</p>
+            <p id="title">Mission en cours</p>
         </div>
         <div class="bg-dark rounded-bottom p-1 ps-2 flex-fill">
-            <p class="fs-5">{{ props.mission }} / 5</p>
-            <p>Objectif: survivre à 5 missions en obtenant le plus de crédits</p>
+            <p class="fs-5" id="nbMission">{{ props.mission }} / 5</p>
+            <p id="objective">Objectif: survivre à 5 missions en obtenant le plus de crédits</p>
         </div>
     </div>
 </template>

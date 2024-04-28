@@ -16,12 +16,12 @@
 <template>
     <div class="w-50">
         <div class="bg-primary rounded-top p-1 ps-2">
-            <p>{{ props.opponent.name }}</p>
+            <p id="name">{{ props.opponent.name }}</p>
         </div>
         <div class="bg-dark rounded-bottom p-2">
-            <p>{{ experiences[props.opponent.experience] }} - {{ props.opponent.credit }} CG</p>
-            <p class="ship-font text-center">{{ props.opponent.ship.name }}</p>
-            <progress :value="props.opponent.ship.vitality" :max="props.initialOpponentHealth" class="w-100"></progress>
+            <p id="experience">{{ experiences[props.opponent.experience] }} - {{ props.opponent.credit }} CG</p>
+            <p class="ship-font text-center" id="vaisseauNom">{{ props.opponent.ship.name }}</p>
+            <progress :value="props.opponent.ship.vitality" :max="props.initialOpponentHealth" class="w-100" id="health"></progress>
         </div>
     </div>
 </template>
