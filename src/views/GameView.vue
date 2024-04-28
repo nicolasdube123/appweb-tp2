@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { ref, watch } from "vue";
     import { Player, GameStatus } from "../App.vue";
-    import { Character } from "../script/characterService"
+    import { Character, fightingOdds } from "../script/characterService"
     import { useRouter } from "vue-router";
     import Popup from "../components/Popup.vue"
     import Action from "../components/Action.vue"
@@ -86,24 +86,7 @@
     }
 
     function playerHitsTarget(experience : number) : boolean {
-        let odds: number
-        
-        switch (experience) {
-            case 1:
-                odds = 0.2
-                break;
-            case 2:
-                odds = 0.35
-                break;
-            case 3:
-                odds = 0.5
-                break;
-            case 4:
-                odds = 0.7
-                break;
-            default:
-                throw new Error("Invalid experience level")
-        }
+        let odds: number = fightingOdds[experience]
 
         // random() retourne un nombre aléatoire entre 0 et 1
         // Si odds = 0.7, il y a 70% de chance que le nombre aléatoire soit inférieur, etc.
