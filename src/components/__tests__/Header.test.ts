@@ -1,7 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Header from '../Header.vue'
-import { ref } from 'vue'
 import { GameStatus } from '../../App.vue'
 
 let gameStatusStarted: GameStatus = {
