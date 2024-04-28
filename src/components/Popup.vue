@@ -9,11 +9,11 @@
 <template>
     <div class="popup fixed-top fixed-bottom fixed-left fixed-right d-flex align-items-center justify-content-center position-fixed">
         <div class="p-4 bg-white">
-            <h2>{{ props.title }}</h2>
-            <p>{{ props.text }}</p>
+            <h2 id="title">{{ props.title }}</h2>
+            <p id="text">{{ props.text }}</p>
             <div class="d-flex align-items-center justify-content-around">
-                <button v-if="props.optionToCancel" @click="$emit('cancelPopup')" class="btn btn-danger">Non</button>
-                <button @click="$emit('proceedPopup')" class="btn btn-success">Ok</button>
+                <button v-if="props.optionToCancel" @click="$emit('cancelPopup')" class="btn btn-danger" id="cancel">Non</button>
+                <button @click="$emit('proceedPopup')" class="btn btn-success" id="proceed">Ok</button>
             </div>
         </div>
     </div>
