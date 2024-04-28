@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils'
 import Score from '../Score.vue'
 import Ranking from '../../script/rankingService'
 
-describe('Form.vue', () => {
+describe('Score.vue', () => {
     it("Les entrants existent", async () => {
       let wrapper = mount(Score, {
         propsData: {

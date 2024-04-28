@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils'
 import PlayerComponent from '../Player.vue'
 import Player from '../../App.vue'
 
-describe('Form.vue', () => {
+describe('Player.vue', () => {
     it("Les entrants existent", async () => {
       let wrapper = mount(PlayerComponent, {
         propsData: {

@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils'
 import Opponent from '../Opponent.vue'
 import Character from '../../script/characterService'
 
-describe('Form.vue', () => {
+describe('Opponent.vue', () => {
     it("Les entrants existent", async () => {
       let wrapper = mount(Opponent, {
         propsData: {

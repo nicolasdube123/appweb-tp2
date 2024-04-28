@@ -12,13 +12,13 @@
             <p>Actions</p>
         </div>
         <div class="bg-dark rounded-bottom row">
-            <button @click="emit('fight')" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
+            <button @click="emit('fight')" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center" id="fight">
                 <p>Combattre</p>
             </button>
-            <button @click="emit('end')" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
+            <button @click="emit('end')" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center" id="end">
                 <p>Terminer la mission</p>
             </button>
-            <button @click="emit('endWithRepair')" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center">
+            <button @click="emit('endWithRepair')" class="btn btn-outline-none col rounded bg-primary m-3 p-2 d-flex justify-content-center align-items-center text-center" id="endWithRepair">
                 <p>Terminer la mission et réparer le vaisseau</p>
             </button>
         </div>
