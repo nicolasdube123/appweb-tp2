@@ -32,8 +32,6 @@
         else 
         {
             hasValidationErrors.value = false
-            console.log(name.value)
-            console.log(ship.value?.toString())
             //Les vérifications de undefined sont faites dans isFieldEmpty
             // @ts-ignore
             emit("submitForm", name.value, ship.value?.toString())
@@ -41,8 +39,6 @@
     }
 
     function isFieldEmpty() {
-        console.log(ship.value)
-        console.log(ship.value?.toString())
         if (name.value == undefined || ship.value == undefined) {
             return true
         }
@@ -60,8 +56,8 @@
         <span class="h1">Votre objectif:</span>
         <span class="h2 text-secondary"> survivre à 5 missions en obtenant le plus de crédits galactiques.</span>
     </p>
-    <div class="error-msg" v-if="!isServiceAvailable"><h3>{{ DB_ERROR_MESSAGE }}</h3></div>
-    <div class="error-msg" v-if="hasValidationErrors"><h3>{{ VERIFICATION_ERROR_MESSAGE }}</h3></div>
+    <div class="error-msg" id="err_db" v-if="!isServiceAvailable"><h3>{{ DB_ERROR_MESSAGE }}</h3></div>
+    <div class="error-msg" id="err_verif" v-if="hasValidationErrors"><h3>{{ VERIFICATION_ERROR_MESSAGE }}</h3></div>
     <div id="shipForm" class="container w-25 border rounded">
         <form>
             <div class="form-group my-3">
@@ -81,7 +77,7 @@
                     </Suspense>
                 </select>
             </div>
-            <a class="btn btn-primary btn-block w-100 mb-3" @click="submitForm()">Démarrer la partie</a>
+            <a class="btn btn-primary btn-block w-100 mb-3" id="start" @click="submitForm()">Démarrer la partie</a>
         </form>
     </div>
 </template>
