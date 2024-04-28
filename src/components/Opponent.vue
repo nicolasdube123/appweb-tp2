@@ -1,17 +1,10 @@
 <script setup lang="ts">
-    import { Character } from "../script/characterService"
+    import { Character, experiences } from "../script/characterService"
+
     const props = defineProps<{
         opponent: Character,
         initialOpponentHealth: number
     }>()
-
-    //importer de characterService plutôt?
-    const experiences: { [key: number]: string } = {
-        1: "Débutant",
-        2: "Confirmé",
-        3: "Expert",
-        4: "Maitre"
-    }
 </script>
 <template>
     <div class="w-50">
