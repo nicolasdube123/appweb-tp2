@@ -32,8 +32,6 @@ export class RankingService {
       id: id.toString,
       name: name,
       score: score
-    }).then(function (response) {
-      console.log(response);
     })
     id++
   }

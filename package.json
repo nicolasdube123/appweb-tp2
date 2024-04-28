@@ -22,7 +22,8 @@
     "json-server": "^1.0.0-alpha.23",
     "luxon": "^2.3.1",
     "vue": "^3.4.15",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "copy-files-from-to": "latest"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.6",
