@@ -3,6 +3,9 @@ import { mount } from '@vue/test-utils'
 import Form from '../Form.vue'
 import { Ship } from '../../script/shipService'
 
+const DB_ERROR_MESSAGE = "Il semble y avoir un problème! Veuillez réessayer plus tard."
+const VERIFICATION_ERROR_MESSAGE = "Veuillez vous assurer de remplir tous les champs."
+
 const ANY_SHIP: Ship = {
   id: "1",
   name: "Vaisseau"
@@ -46,7 +49,7 @@ describe('Form.vue', () => {
       const errorMessage = wrapper.find("#err_db")
       
       expect(errorMessage.exists()).toBeTruthy()
-      expect(errorMessage.text()).toContain("Il semble y avoir un problème! Veuillez réessayer plus tard.")
+      expect(errorMessage.text()).toContain(DB_ERROR_MESSAGE)
     })
 
     it("Si les champs sont vides, hasValidationErrors est vrai", async () => {
@@ -85,7 +88,7 @@ describe('Form.vue', () => {
       const errorMessage = wrapper.find("#err_verif")
       
       expect(errorMessage.exists()).toBeTruthy()
-      expect(errorMessage.text()).toContain("Veuillez vous assurer de remplir tous les champs.")
+      expect(errorMessage.text()).toContain(VERIFICATION_ERROR_MESSAGE)
     })
 
     it("Si hasValidationErrors est faux, le message d'erreur verif n'apparait pas", async () => {
