@@ -2,8 +2,6 @@
 
 ## Semaine 10:
 
-
-
 ### *Auteur: Nicolas Dubé***
 
 * Avait mal implémenté les services dans le code, mais a corrigé depuis<br />
@@ -115,4 +113,14 @@ const experiences: { [key: number]: string } = {
     3: "Expert",
     4: "Maitre"
 }
+```
+
+### *Auteur: Nicolas Dubé***
+
+* A bien séparé les vues des components, ce que l'on avait oublié de prendre en considération plutôt<br />
+* Les components sont séparés d'une façon rendant le code beaucoup plus léger et compréhensible<br />
+* :
+
+```
+
 ```
