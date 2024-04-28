@@ -74,7 +74,11 @@
 
     function endGame() {
         if (player.value && gameStatus.value) {
-            gameStatus.value.hasWon = (player.value.ship.vitality > 0)
+            if (player.value.ship.vitality > 0)
+            {
+                gameStatus.value.hasWon = true
+                rankingService.insertRanking(player.value.name, player.value.credit.toString())
+            }
             gameStatus.value.hasStarted = false
         }
     }
