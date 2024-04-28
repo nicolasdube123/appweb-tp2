@@ -31,10 +31,10 @@ describe('Opponent.vue', () => {
       const vaisseauNom = wrapper.find("#vaisseauNom")
       const health = wrapper.find("#health")
       
-      expect(name.exists()).toBe(true)
-      expect(experience.exists()).toBe(true)
-      expect(vaisseauNom.exists()).toBe(true)
-      expect(health.exists()).toBe(true)
+      expect(name.exists()).toBeTruthy()
+      expect(experience.exists()).toBeTruthy()
+      expect(vaisseauNom.exists()).toBeTruthy()
+      expect(health.exists()).toBeTruthy()
     })
 
     it("Le status affiché équivaut à l'expérience envoyé en props", () => {

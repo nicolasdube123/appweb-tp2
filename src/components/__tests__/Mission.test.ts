@@ -13,9 +13,9 @@ describe('Mission.vue', () => {
       const nbMission = wrapper.find("#nbMission")
       const objective = wrapper.find("#objective")
       
-      expect(title.exists()).toBe(true)
-      expect(nbMission.exists()).toBe(true)
-      expect(objective.exists()).toBe(true)
+      expect(title.exists()).toBeTruthy()
+      expect(nbMission.exists()).toBeTruthy()
+      expect(objective.exists()).toBeTruthy()
     })
 
     it("Les champs existent", async () => {

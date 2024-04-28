@@ -29,9 +29,9 @@ describe('Player.vue', () => {
     const vaisseauNom = wrapper.find("#vaisseauNom")
     const health = wrapper.find("#health")
     
-    expect(name.exists()).toBe(true)
-    expect(credit.exists()).toBe(true)
-    expect(vaisseauNom.exists()).toBe(true)
-    expect(health.exists()).toBe(true)
+    expect(name.exists()).toBeTruthy()
+    expect(credit.exists()).toBeTruthy()
+    expect(vaisseauNom.exists()).toBeTruthy()
+    expect(health.exists()).toBeTruthy()
   })
 })

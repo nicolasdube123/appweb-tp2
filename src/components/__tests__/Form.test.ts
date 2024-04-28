@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Form from '../Form.vue'
-import Ship from '../../script/shipService'
+import { Ship } from '../../script/shipService'
 
 const ANY_SHIP: Ship = {
   id: "1",
@@ -20,9 +20,9 @@ describe('Form.vue', () => {
       const select = wrapper.find("#shipSelect")
       const button = wrapper.find("a")
       
-      expect(name.exists()).toBe(true)
-      expect(select.exists()).toBe(true)
-      expect(button.exists()).toBe(true)
+      expect(name.exists()).toBeTruthy()
+      expect(select.exists()).toBeTruthy()
+      expect(button.exists()).toBeTruthy()
     })
 
     
@@ -34,7 +34,7 @@ describe('Form.vue', () => {
       })
       const errorMessage = wrapper.find("#err_db")
       
-      expect(errorMessage.exists()).toBe(false)
+      expect(errorMessage.exists()).toBeFalsy()
     })
 
     it("Si le service n'est pas disponible, le message d'erreur bd existe", async () => {
@@ -45,7 +45,7 @@ describe('Form.vue', () => {
       })
       const errorMessage = wrapper.find("#err_db")
       
-      expect(errorMessage.exists()).toBe(true)
+      expect(errorMessage.exists()).toBeTruthy()
       expect(errorMessage.text()).toContain("Il semble y avoir un problème! Veuillez réessayer plus tard.")
     })
 
@@ -57,7 +57,7 @@ describe('Form.vue', () => {
       })
       await wrapper.find("#start").trigger("click")
       
-      expect(wrapper.vm.hasValidationErrors).toBe(true)
+      expect(wrapper.vm.hasValidationErrors).toBeTruthy()
     })
 
     it("Si les champs ne sont pas vides, hasValidationErrors est faux", async () => {
@@ -70,7 +70,7 @@ describe('Form.vue', () => {
       wrapper.vm.ship="id"
       await wrapper.find("#start").trigger("click")
       
-      expect(wrapper.vm.hasValidationErrors).toBe(false)
+      expect(wrapper.vm.hasValidationErrors).toBeFalsy()
     })
 
     it("Si hasValidationErrors est vrai, le message d'erreur verif apparait", async () => {
@@ -84,7 +84,7 @@ describe('Form.vue', () => {
       await wrapper.vm.$nextTick()
       const errorMessage = wrapper.find("#err_verif")
       
-      expect(errorMessage.exists()).toBe(true)
+      expect(errorMessage.exists()).toBeTruthy()
       expect(errorMessage.text()).toContain("Veuillez vous assurer de remplir tous les champs.")
     })
 
@@ -99,6 +99,6 @@ describe('Form.vue', () => {
       await wrapper.vm.$nextTick()
       const errorMessage = wrapper.find("#err_verif")
       
-      expect(errorMessage.exists()).toBe(false)
+      expect(errorMessage.exists()).toBeFalsy()
     })
   })

@@ -9,9 +9,9 @@ describe('Action.vue', () => {
       const end = wrapper.find("#end")
       const endWithRepair = wrapper.find("#endWithRepair")
       
-      expect(fight.exists()).toBe(true)
-      expect(end.exists()).toBe(true)
-      expect(endWithRepair.exists()).toBe(true)
+      expect(fight.exists()).toBeTruthy()
+      expect(end.exists()).toBeTruthy()
+      expect(endWithRepair.exists()).toBeTruthy()
     })
 
     it("Quand combat est cliqué, emit fight", async () => {
