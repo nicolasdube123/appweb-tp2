@@ -119,8 +119,19 @@ const experiences: { [key: number]: string } = {
 
 * A bien séparé les vues des components, ce que l'on avait oublié de prendre en considération plutôt<br />
 * Les components sont séparés d'une façon rendant le code beaucoup plus léger et compréhensible<br />
-* :
+* Les tests englobent bien les fonctionnalités et cas possibles de l'application <br />
+* Pourrait utiliser des constantes dans les tests:
 
 ```
-
+it("Si le service n'est pas disponible, le message d'erreur bd existe", async () => {
+      let wrapper = mount(Form, {
+        propsData: { 
+          isServiceAvailable: false, 
+          ships: [] }
+      })
+      const errorMessage = wrapper.find("#err_db")
+      
+      expect(errorMessage.exists()).toBeTruthy()
+      expect(errorMessage.text()).toContain("Il semble y avoir un problème! Veuillez réessayer plus tard.")
+    })
 ```
