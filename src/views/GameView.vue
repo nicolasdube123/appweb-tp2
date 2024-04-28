@@ -117,11 +117,6 @@
         router.push('/')
     }
 
-    function playerHasWon() {
-        
-        routeToRanking
-    }
-
     function routeToRanking() {
         router.push('/ranking')
     }
@@ -131,7 +126,7 @@
     
     <!--Apparaît si le joueur gagne la partie-->
     <Popup v-if="!props.gameStatus.hasStarted && props.gameStatus.hasWon" 
-        @proceedPopup="playerHasWon"
+        @proceedPopup="routeToRanking"
         :optionToCancel=false
         :title="'Partie gagnée'"
         :text="'Vous avez gagné un total de ' + props.player.credit + ' CG.\nRedirection vers le score'"
