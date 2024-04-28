@@ -30,7 +30,7 @@
         hasWon: undefined
     })
 
-    async function createGame(formName: string, formShipId: string) {
+    async function createGame(formName: String, formShipId: String) {
         const playerShip : Ship = await shipService.getShip(formShipId)
 
         player.value = {

@@ -78,3 +78,41 @@ switch (experience) {
         throw new Error("Invalid experience level")
 }
 ```
+
+## Semaine 12:
+
+### *Auteur: Raphaël Boudreault* **
+
+* Bonne idée d'utiliser le v-if au lieu de innerHTML
+\n mais il faudrait en conséquence retirer la balise h3 de la constante
+
+```ts
+const VERIFICATION_ERROR_MESSAGE = "<h3>Veuillez vous assurer de remplir tous les champs.</h3>"
+
+//Ancien
+if (isFieldEmpty()) {
+    let divError = document.getElementById("err_verification") as HTMLElement
+    divError.innerHTML=VERIFICATION_ERROR_MESSAGE
+}
+
+<div class="erreur_message" id="err_verification"></div>
+
+//Nouveau
+if (isFieldEmpty()) 
+{
+    hasValidationErrors.value = true
+}
+
+<div class="error-msg" v-if="hasValidationErrors">{{ VERIFICATION_ERROR_MESSAGE }}</div>
+```
+
+* Il vaudrait mieux importer ces constantes de characterService plutôt que de les créer dans GameView
+
+```ts
+const experiences: { [key: number]: string } = {
+    1: "Débutant",
+    2: "Confirmé",
+    3: "Expert",
+    4: "Maitre"
+}
+```

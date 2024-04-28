@@ -31,14 +31,18 @@
         }
         else 
         {
+            hasValidationErrors.value = false
+            console.log(name.value)
+            console.log(ship.value?.toString())
             //Les vérifications de undefined sont faites dans isFieldEmpty
             // @ts-ignore
-            emit("submitForm", name.value, ship.value?.toString)
-            hasValidationErrors.value = false
+            emit("submitForm", name.value, ship.value?.toString())
         }
     }
 
     function isFieldEmpty() {
+        console.log(ship.value)
+        console.log(ship.value?.toString())
         if (name.value == undefined || ship.value == undefined) {
             return true
         }
