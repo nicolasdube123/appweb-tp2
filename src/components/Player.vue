@@ -8,12 +8,12 @@
 <template>
     <div class="w-50">
         <div class="bg-primary rounded-top p-1 ps-2">
-            <p>{{props.player.name}}</p>
+            <p id="name">{{props.player.name}}</p>
         </div>
         <div class="bg-dark rounded-bottom p-2">
-            <p>Maitre - {{ props.player.credit }} CG</p>
-            <p class="ship-font text-center">{{props.player.ship.name}}</p>
-            <progress :value="props.player.ship.vitality" :max="props.initialPlayerHealth" class="w-100"></progress>
+            <p id="credit">Maitre - {{ props.player.credit }} CG</p>
+            <p class="ship-font text-center" id="vaisseauNom">{{props.player.ship.name}}</p>
+            <progress :value="props.player.ship.vitality" :max="props.initialPlayerHealth" class="w-100" id="health"></progress>
         </div>
     </div>
 </template>
